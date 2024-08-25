@@ -77,8 +77,15 @@ func GeneratePosts(mux *http.ServeMux) ([]PostData, error) {
 			return nil, fmt.Errorf("failed to read post template: %v", err)
 		}
 
+		type IPostData struct {
+			Title string
+			Post  string
+		}
 		mux.HandleFunc("/posts/"+postName, func(w http.ResponseWriter, r *http.Request) {
-			if err := foo.ExecuteTemplate(w, "post.html", string(content)); err != nil {
+			if err := foo.ExecuteTemplate(w, "post.html", IPostData{
+				Title: meta["title"],
+				Post:  string(content),
+			}); err != nil {
 				fmt.Println(err)
 			}
 		})

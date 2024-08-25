@@ -5,7 +5,7 @@
 		<li>lang: go</li>
 		<li>infra: kubernetes</li>
 	</ul>
-	<h2>daily learnings</h2>
+	<h2>tidbits</h2>
 	<h3>#go</h3>
 	<ul>
 		<li>layout packages by what they do, not by their abstract type</li>
@@ -19,15 +19,25 @@
 		</li>
 		<li>don't use <code>init()</code></li>
 		<li>TFBO (test, fix, benchmark, optimise)</li>
+		<li>more CPU != more performance
+			<br/>
+			more CPU == more Contention
+		</li>
 	</ul>
 	<h3>#git</h3>
 	<ul>
-		<li><code>git commit --fixup=&lt;COMMITSH&gt;</code>
+		<li><code>git reflog</code></li>
+		<li><code>git commit --fixup=&lt;COMMITISH&gt;</code>
 			<br />
 			<code>git rebase origin/main --autosquash</code>
 		</li>
 	</ul>
 
+	<h2>resources</h2>
+	<ul>
+		<li><a href=https://cs.opensource.google/go/go/+/refs/tags/go1.23.0:src/runtime/proc.go><code>proc.go</code></a></li>
+		<li><a href=https://github.com/golang/go/issues/67120>proposal: runtime/metrics: define a recommended set of metrics</a></li>
+	</ul>
 	<h2>books</h2>
 	<ul>
 		<li><a href=https://www.oreilly.com/library/view/designing-data-intensive-applications/9781491903063 />Designing

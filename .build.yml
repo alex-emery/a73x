@@ -1,0 +1,9 @@
+image: debian/stable
+packages:
+  - go 
+  - docker
+sources:
+  - https://git.sr.ht/~a73x/home
+tasks:
+  - setup: |
+    make public
