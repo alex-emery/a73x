@@ -1,4 +1,9 @@
 {{template "base" .}}
 {{define "content"}}
-<h1>Posts</h1>
+<h1>posts</h1>
+<ul>
+	{{range .Posts}}    
+	<li><a href="{{.Path}}">{{.Title}}</a></li>
+{{end}}
+</ul>
 {{end}}
