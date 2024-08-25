@@ -14,6 +14,5 @@ tasks:
       sudo usermod -aG docker $(whoami)
       cat ~/.docker_token | docker login -u a73xsh --password-stdin
   - setup: |
-      ls
       cd home
       make public
