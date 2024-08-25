@@ -133,8 +133,7 @@ func loadTemplates(mux *http.ServeMux, data any) error {
 	}
 	return nil
 }
-func New() (*http.Server, error) {
-	logger, _ := zap.NewProduction()
+func New(logger *zap.Logger) (*http.Server, error) {
 	loggingMiddleware := func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			start := time.Now()
