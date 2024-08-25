@@ -1,5 +1,5 @@
 VERSION=0.0.1
-DOCKER_IMAGE=alexemery/home:${VERSION}
+DOCKER_IMAGE=a73xsh/home:${VERSION}
 
 .PHONY: fly 
 fly: 

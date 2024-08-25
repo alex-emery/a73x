@@ -1,9 +1,19 @@
-image: debian/stable
+image: archlinux 
 packages:
   - go 
   - docker
+  - base-devel
 sources:
-  - https://git.sr.ht/~a73x/home
+  - git@git.sr.ht/~a73x/home
+secrets:
+  -  3b150464-eb54-49dc-9285-066a5aac30b1
+  -  5d82a198-740f-4b63-ad9d-6d1b5154ee51
 tasks:
+  - docker: |
+      sudo systemctl start docker
+      sudo usermod -aG docker $(whoami)
+      cat ~/.docker_token | docker login -u a73xsh --password-stdin
   - setup: |
-    make public
+      ls
+      cd home
+      make public
