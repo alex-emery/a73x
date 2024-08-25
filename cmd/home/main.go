@@ -1,17 +1,14 @@
 package main
 
 import (
-	"embed"
 	"io/fs"
 	"log"
 	"net/http"
 	"time"
 
+	"git.sr.ht/~a73x/home"
 	"go.uber.org/zap"
 )
-
-//go:embed public/index.html
-var content embed.FS
 
 func main() {
 	logger, _ := zap.NewProduction()
@@ -30,12 +27,12 @@ func main() {
 
 	mux := http.NewServeMux()
 
-	staticFs, err := fs.Sub(content, "public")
+	staticFs, err := fs.Sub(home.Content, "public")
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	mux.Handle("/", http.FileServer(http.FS(staticFs)))
+	mux.Handle("GET /", http.FileServer(http.FS(staticFs)))
 
 	server := http.Server{
 		Addr:    ":8080",

@@ -1,55 +1,5 @@
-
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<meta name="description" content="Home for a73x" />
-	<meta name="author" content="a73x" />
-	<meta name="viewport"
-		content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width" />
-	<title>a73x</title>
-	<style>
-		@font-face {
-			font-family: 'Mono';
-			src: url('./static/V1-ServerMono-Regular.woff2') format('woff2');
-			font-weight: normal;
-			font-style: normal;
-		}
-
-		body {
-			font-family: "Mono";
-		}
-
-		code {
-			font-family: "Mono";
-			color: crimson;
-			background-color: #f1f1f1;
-			padding: 2px;
-		}
-
-		nav ul {
-			display: flex;
-			list-style: none;
-		}
-
-		nav ul li {
-			margin-right: 20px;
-		}
-	</style>
-</head>
-
-<body>
-	<!-- templates/header.html -->
-<h1>a73x</h1>
-<nav>
-	<ul>
-		<li><a href="/">Home</a></li>
-		<li><a href="/posts">Posts</a></li>
-	</ul>
-</nav>
-
-	
+{{template "base" .}}
+{{define "content"}}
 	<ul>
 		<li>backend cloud software engineer</li>
 		<li>lang: go</li>
@@ -91,9 +41,4 @@
 		</li>
 
 	</ul>
-
-</body>
-
-</html>
-
-
+{{end}}
