@@ -61,7 +61,11 @@
 	<nav>
 		<ul>
 			<li><a href="/">home</a></li>
-			<li><a href="/posts">posts</a></li>
+			{{ range $key, $value := .Collections }}
+			{{if ne $key "all"}}
+			<li><a href="/{{$key}}">{{$key}}</a></li>
+			{{end}}
+			{{end}}
 		</ul>
 	</nav>
 	{{ template "content" . }}

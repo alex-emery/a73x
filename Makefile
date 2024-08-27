@@ -1,10 +1,6 @@
 VERSION=0.0.1
 DOCKER_IMAGE=a73xsh/home:${VERSION}
 
-.PHONY: fly 
-fly: 
-	cd proxy && fly deploy
-
 .PHONY: serve 
 serve: 
 	go run ./cmd/home
