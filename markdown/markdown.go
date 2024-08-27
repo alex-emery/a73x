@@ -7,7 +7,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"git.sr.ht/~a73x/home"
+	"git.sr.ht/~a73x/home/content"
 	"github.com/adrg/frontmatter"
 )
 
@@ -18,18 +18,18 @@ type Content struct {
 }
 
 func ParseContents() ([]Content, error) {
-	contentFS, err := fs.Sub(home.Content, "content")
-	if err != nil {
-		return nil, fmt.Errorf("no content found: %v", err)
-	}
-	contentFiles, err := glob(contentFS, ".", ".md")
+	// contentFS, err := fs.Sub(content.FS, "content")
+	// if err != nil {
+	// 	return nil, fmt.Errorf("no content found: %v", err)
+	// }
+	contentFiles, err := glob(content.FS, ".", ".md")
 	if err != nil {
 		return nil, fmt.Errorf("failed to glob: %v", err)
 	}
 
 	res := make([]Content, 0, len(contentFiles))
 	for _, contentFile := range contentFiles {
-		c, err := parseMarkdownFile(contentFS, contentFile)
+		c, err := parseMarkdownFile(content.FS, contentFile)
 		if err != nil {
 			return nil, fmt.Errorf("failed to read markdown file: %v", err)
 		}

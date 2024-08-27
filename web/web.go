@@ -6,8 +6,8 @@ import (
 	"net/http"
 	"time"
 
-	"git.sr.ht/~a73x/home"
 	"git.sr.ht/~a73x/home/pages"
+	"git.sr.ht/~a73x/home/public"
 	"go.uber.org/zap"
 )
 
@@ -37,7 +37,7 @@ func New(logger *zap.Logger) (*http.Server, error) {
 		})
 	}
 
-	staticFs, err := fs.Sub(home.Content, "public/static")
+	staticFs, err := fs.Sub(public.FS, "static")
 	if err != nil {
 		return nil, fmt.Errorf("failed to setup static handler: %v", err)
 	}

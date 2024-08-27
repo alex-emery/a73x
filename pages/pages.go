@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"text/template"
 
-	"git.sr.ht/~a73x/home"
 	"git.sr.ht/~a73x/home/html"
 	"git.sr.ht/~a73x/home/markdown"
+	"git.sr.ht/~a73x/home/templates"
 )
 
 type GlobalState struct {
@@ -21,8 +21,8 @@ type ParserPair struct {
 
 func renderTemplate(config GlobalState, content markdown.Content) (string, error) {
 	tmpl := content.Meta["template"]
-	chosenTemplate := fmt.Sprintf("templates/%s.html", tmpl)
-	t, err := template.ParseFS(home.Content, chosenTemplate, "templates/layouts/*.html")
+	chosenTemplate := fmt.Sprintf("%s.html", tmpl)
+	t, err := template.ParseFS(templates.FS, chosenTemplate, "layouts/*.html")
 	if err != nil {
 		return "", fmt.Errorf("failed to parse layouts: %v", err)
 	}
