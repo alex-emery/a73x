@@ -18,10 +18,6 @@ type Content struct {
 }
 
 func ParseContents() ([]Content, error) {
-	// contentFS, err := fs.Sub(content.FS, "content")
-	// if err != nil {
-	// 	return nil, fmt.Errorf("no content found: %v", err)
-	// }
 	contentFiles, err := glob(content.FS, ".", ".md")
 	if err != nil {
 		return nil, fmt.Errorf("failed to glob: %v", err)

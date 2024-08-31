@@ -9,12 +9,19 @@
 	<meta name="viewport"
 		content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width" />
 	<title>a73x</title>
+	<link rel="stylesheet" href="/static/styles.css">
+	<script src="/static/highlight.js"></script>
+	<script src="/static/highlight.go.js"></script>
+	<script>hljs.highlightAll();</script>
 	<style>
 		@font-face {
 			font-family: 'Mono';
 			src: url('/static/V1-ServerMono-Regular.woff2') format('woff2');
 			font-weight: normal;
 			font-style: normal;
+		}
+		code {
+			font-family: "Mono";
 		}
 		h1 {
 			margin-bottom: 0;
@@ -23,27 +30,6 @@
 			max-width: 70ch;
 			font-family: "Mono";
 		}
-
-		pre {
-			overflow: scroll;
-			font-family: "Mono";
-			color: crimson;
-			background-color: #f1f1f1;
-			padding: 2px;
-
-		}
-
-		pre code {
-			background: none;
-		}
-
-		code {
-			font-family: "Mono";
-			color: crimson;
-			background-color: #f1f1f1;
-			padding: 2px;
-		}
-
 		nav ul {
 			display: flex;
 			list-style: none;
