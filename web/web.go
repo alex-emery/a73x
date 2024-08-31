@@ -31,18 +31,17 @@ func New(logger *zap.Logger) (*http.Server, error) {
 		return nil, err
 	}
 
-	for _, page := range pages {
-		mux.HandleFunc("GET /"+page.Path, func(w http.ResponseWriter, r *http.Request) {
-			w.Write([]byte(page.Content))
-		})
-	}
-
 	staticFs, err := fs.Sub(public.FS, "static")
 	if err != nil {
 		return nil, fmt.Errorf("failed to setup static handler: %v", err)
 	}
 
-	mux.Handle("GET /static", http.FileServer(http.FS(staticFs)))
+	mux.Handle("GET /static/", http.StripPrefix("/static/", http.FileServer(http.FS(staticFs))))
+	for _, page := range pages {
+		mux.HandleFunc("GET /"+page.Path, func(w http.ResponseWriter, r *http.Request) {
+			w.Write([]byte(page.Content))
+		})
+	}
 
 	server := http.Server{
 		Addr:    ":8080",
