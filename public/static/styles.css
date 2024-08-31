@@ -1,5 +1,5 @@
 /* Background */ .bg { background-color: #ffffff; -moz-tab-size: 2; -o-tab-size: 2; tab-size: 2 }
-/* PreWrapper */ .chroma { background-color: #ffffff; -moz-tab-size: 2; -o-tab-size: 2; tab-size: 2; }
+/* PreWrapper */ .chroma { background-color: #ffffff; -moz-tab-size: 2; -o-tab-size: 2; tab-size: 2; overflow: scroll}
 /* Error */ .chroma .err { color: #000000 }
 /* LineTableTD */ .chroma .lntd { vertical-align: top; padding: 0; margin: 0; border: 0; }
 /* LineTable */ .chroma .lntable { border-spacing: 0; padding: 0; margin: 0; border: 0; }
