@@ -10,7 +10,7 @@ title: me
 ### #go
 
 *   layout packages by what they do, not by their abstract type
-*   use channels sparingly. write synchronous methods and allow the caller to make it async
+*   use channels sparingly: write synchronous methods and allow the caller to make it async
 *   `append` modifies the underlying slice, you'll only make this mistake once
 *   define interfaces where you use them
 *   `make([]int, 5)` has a length and capacity of 5. `([]int, 0,5)` has a length of 0 and capacity of 5.  
@@ -18,7 +18,7 @@ title: me
 *   don't use `init()`
 *   TFBO (test, fix, benchmark, optimise)
 *   more CPU != more performance  
-    more CPU == more Contention
+    more CPU == more contention
 
 ### #git
 
