@@ -17,16 +17,31 @@
 			font-weight: normal;
 			font-style: normal;
 		}
+
+		code:not(pre > code) {
+			background-color: #f0f0f0;
+			padding: 0.2em 0.4em;
+			border-radius: 3px;
+		}
+
+		blockquote {
+			border-left: 2px solid #000000;
+			padding-left: 10px;
+		}
+
 		code {
 			font-family: "Mono";
 		}
+
 		h1 {
 			margin-bottom: 0;
 		}
+
 		body {
 			max-width: 70ch;
 			font-family: "Mono";
 		}
+
 		nav ul {
 			display: flex;
 			list-style: none;
@@ -53,9 +68,10 @@
 	</nav>
 	{{ template "content" . }}
 	<footer>
-		<br />​<hr />​​​​​​​​​​​​​​​​​​​<br />​​​​​
+		<br />​
+		<hr />​​​​​​​​​​​​​​​​​​​<br />​​​​​
 		<p>see something you disagree with? email: <a href="mailto:yourewrong@a73x.sh">yourewrong@a73x.sh</a></p>
-	  </footer> 
+	</footer>
 </body>
 
 </html>

@@ -19,10 +19,10 @@ type Highlighter struct {
 }
 
 func (h Highlighter) htmlHighlight(w io.Writer, source, lang, defaultLang string) error {
-
 	if lang == "" {
 		lang = defaultLang
 	}
+
 	l := lexers.Get(lang)
 	if l == nil {
 		l = lexers.Analyse(source)
@@ -55,9 +55,7 @@ func (h Highlighter) myRenderHook(w io.Writer, node ast.Node, entering bool) (as
 
 func newRenderer() *mdhtml.Renderer {
 	htmlFormatter := html.New(html.WithClasses(true), html.TabWidth(2))
-	if htmlFormatter == nil {
-		panic("couldn't create html formatter")
-	}
+
 	styleName := "monokailight"
 	highlightStyle := styles.Get(styleName)
 	if highlightStyle == nil {

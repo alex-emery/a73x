@@ -1,5 +1,21 @@
 /* Background */ .bg { background-color: #ffffff; -moz-tab-size: 2; -o-tab-size: 2; tab-size: 2 }
-/* PreWrapper */ .chroma { background-color: #ffffff; -moz-tab-size: 2; -o-tab-size: 2; tab-size: 2; overflow: scroll}
+/* PreWrapper */ .chroma { 
+    background-color: #ffffff; 
+    -moz-tab-size: 2; 
+    -o-tab-size: 2; 
+    tab-size: 2; 
+    margin: 2em;
+    padding: 3em 5em 3em 2em;
+    box-shadow: 5px 5px 5px rgba(68, 68, 68, 0.6);
+    border-radius: 7px;
+    border: 2px solid black;
+    /*wrap lines in code blocks*/
+    white-space: pre-wrap;       /* Since CSS 2.1 */
+    white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+    white-space: -pre-wrap;      /* Opera 4-6 */
+    white-space: -o-pre-wrap;    /* Opera 7 */
+    word-wrap: break-word;       /* Internet Explorer 5.5+ */
+}
 /* Error */ .chroma .err { color: #000000 }
 /* LineTableTD */ .chroma .lntd { vertical-align: top; padding: 0; margin: 0; border: 0; }
 /* LineTable */ .chroma .lntable { border-spacing: 0; padding: 0; margin: 0; border: 0; }
