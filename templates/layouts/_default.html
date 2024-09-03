@@ -18,6 +18,10 @@
 			font-style: normal;
 		}
 
+		.no-decorations {
+			text-decoration: none;
+		}
+
 		code:not(pre > code) {
 			background-color: #f0f0f0;
 			padding: 0.2em 0.4em;
@@ -52,16 +56,23 @@
 		}
 	</style>
 </head>
-
 <body>
-	<h2>a73x</h2>
+	<h1>a73x</h1>
 	<sub>high effort, low reward</sub>
 	<nav>
 		<ul>
+			{{ if eq .Path "index" }}
 			<li><a href="/">home</a></li>
+			{{else}}
+			<li><a class="no-decorations" href="/">home</a></li>
+			{{end}}
 			{{ range $key, $value := .Collections }}
 			{{if ne $key "all"}}
+			{{ if eq $.Path $key }}
 			<li><a href="/{{$key}}">{{$key}}</a></li>
+			{{else}}
+			<li><a class="no-decorations" href="/{{$key}}">{{$key}}</a></li>
+			{{end}}
 			{{end}}
 			{{end}}
 		</ul>
