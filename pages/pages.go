@@ -12,6 +12,7 @@ import (
 
 type GlobalState struct {
 	Collections map[string][]markdown.Content
+	Nav         map[string]markdown.Content
 }
 
 type ParserPair struct {
@@ -67,21 +68,25 @@ func Collect() ([]Page, error) {
 		Collections: map[string][]markdown.Content{
 			"all": contents,
 		},
+		Nav: map[string]markdown.Content{},
 	}
 
 	for _, content := range contents {
 		tags, ok := content.Meta["tags"]
-		if !ok {
-			continue
+		if ok {
+			switch tags := tags.(type) {
+			case string:
+				gs.Collections[tags] = append(gs.Collections[tags], content)
+			case []string:
+				for _, tag := range tags {
+					gs.Collections[tag] = append(gs.Collections[tag], content)
+				}
+			}
 		}
 
-		switch tags := tags.(type) {
-		case string:
-			gs.Collections[tags] = append(gs.Collections[tags], content)
-		case []string:
-			for _, tag := range tags {
-				gs.Collections[tag] = append(gs.Collections[tag], content)
-			}
+		nav, ok := content.Meta["nav"]
+		if ok {
+			gs.Nav[nav.(string)] = content
 		}
 	}
 

@@ -38,7 +38,7 @@ func New(logger *zap.Logger) (*http.Server, error) {
 
 	mux.Handle("GET /static/", http.StripPrefix("/static/", http.FileServer(http.FS(staticFs))))
 	for _, page := range pages {
-		mux.HandleFunc("GET /"+page.Path, func(w http.ResponseWriter, r *http.Request) {
+		mux.HandleFunc("GET "+page.Path, func(w http.ResponseWriter, r *http.Request) {
 			w.Write([]byte(page.Content))
 		})
 	}

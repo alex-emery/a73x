@@ -1,5 +1,6 @@
 ---
 title: home 
+nav: "/" 
 ---
 ## me 
 *   backend cloud software engineer
