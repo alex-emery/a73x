@@ -5,6 +5,10 @@ DOCKER_IMAGE=a73xsh/home:${VERSION}
 serve: 
 	go run ./cmd/home
 
+.PHONY: css
+css:
+	go run contrib/styles.go > public/static/syntax.css
+
 .PHONY: image
 image:
 	docker build . -t ${DOCKER_IMAGE}

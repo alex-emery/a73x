@@ -10,60 +10,14 @@
 		content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width" />
 	<title>a73x</title>
 	<link rel="stylesheet" href="/static/styles.css">
-	<style>
-		@font-face {
-			font-family: 'Mono';
-			src: url('/static/V1-ServerMono-Regular.woff2') format('woff2');
-			font-weight: normal;
-			font-style: normal;
-		}
-
-		.no-decorations {
-			text-decoration: none;
-		}
-
-		code:not(pre > code) {
-			background-color: #f0f0f0;
-			padding: 0.2em 0.4em;
-			border-radius: 3px;
-		}
-
-		blockquote {
-			border-left: 2px solid #000000;
-			padding-left: 10px;
-		}
-
-		code {
-			font-family: "Mono";
-		}
-
-		h1 {
-			margin-bottom: 0;
-		}
-
-		body {
-			max-width: 70ch;
-			font-family: "Mono";
-		}
-
-		nav ul {
-			display: flex;
-			list-style: none;
-		}
-
-		nav ul li {
-			margin-right: 20px;
-		}
-	</style>
+	<link rel="stylesheet" href="/static/syntax.css">
 </head>
 <body>
 	<h1>a73x</h1>
 	<sub>high effort, low reward</sub>
 	<nav>
 		<ul>
-		<!--{{$.Path}}-->
 		{{ range $key, $value := .Nav}}
-		<!--{{$key}}-->
 		{{ if eq $.Path $key }}
 			<li><a href="{{$key}}">{{$value.Meta.title}}</a></li>
 		{{else}}
