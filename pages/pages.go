@@ -3,6 +3,7 @@ package pages
 import (
 	"bytes"
 	"fmt"
+	"sort"
 	"text/template"
 
 	"git.sr.ht/~a73x/home/html"
@@ -10,9 +11,13 @@ import (
 	"git.sr.ht/~a73x/home/templates"
 )
 
+type Navigation struct {
+	Title string
+	Path  string
+}
 type GlobalState struct {
 	Collections map[string][]markdown.Content
-	Nav         map[string]markdown.Content
+	Nav         []Navigation
 }
 
 type ParserPair struct {
@@ -68,7 +73,7 @@ func Collect() ([]Page, error) {
 		Collections: map[string][]markdown.Content{
 			"all": contents,
 		},
-		Nav: map[string]markdown.Content{},
+		Nav: make([]Navigation, 0),
 	}
 
 	for _, content := range contents {
@@ -86,10 +91,11 @@ func Collect() ([]Page, error) {
 
 		nav, ok := content.Meta["nav"]
 		if ok {
-			gs.Nav[nav.(string)] = content
+			gs.Nav = append(gs.Nav, Navigation{content.Meta["title"].(string), nav.(string)})
 		}
 	}
 
+	sortNavBar(gs.Nav)
 	pages := []Page{}
 	for _, content := range contents {
 		page, err := renderTemplate(gs, content)
@@ -109,4 +115,33 @@ func Collect() ([]Page, error) {
 	}
 
 	return pages, nil
+}
+
+func sortNavBar(nav []Navigation) {
+	// see no evil, speak no evil
+	sort.Slice(nav, func(i, j int) bool {
+		order := map[string]int{
+			"home":  1,
+			"posts": 2,
+			"about": 3,
+		}
+
+		// Get the order value, default to a high number if not in the predefined order
+		orderI, okI := order[nav[i].Title]
+		if !okI {
+			orderI = len(nav) + 1
+		}
+
+		orderJ, okJ := order[nav[j].Title]
+		if !okJ {
+			orderJ = len(nav) + 1
+		}
+
+		// If both strings have the same order value, sort lexicographically
+		if orderI == orderJ {
+			return nav[i].Title < nav[j].Title
+		}
+
+		return orderI < orderJ
+	})
 }

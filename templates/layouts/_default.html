@@ -17,11 +17,11 @@
 	<sub>high effort, low reward</sub>
 	<nav class="nav">
 		<ul>
-		{{ range $key, $value := .Nav}}
-		{{ if eq $.Path $key }}
-			<li><a href="{{$key}}">{{$value.Meta.title}}</a></li>
+		{{ range $vvv, $navPair:= .Nav}}
+		{{ if eq $.Path $navPair.Path }}
+			<li><a href="{{$navPair.Path}}">{{$navPair.Title}}</a></li>
 		{{else}}
-			<li><a class="no-decorations" href="{{$key}}">{{$value.Meta.title}}</a></li>
+			<li><a class="no-decorations" href="{{$navPair.Path}}">{{$navPair.Title}}</a></li>
 		{{end}}
 		{{end}}
 		</ul>
