@@ -1,6 +1,6 @@
 ---
 title: ethos
-nav: ethos
+nav: /ethos
 ---
 
 Yes, this site has an ethos.
