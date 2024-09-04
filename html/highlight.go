@@ -1,7 +1,6 @@
 package html
 
 import (
-	"fmt"
 	"io"
 
 	"github.com/gomarkdown/markdown/ast"
@@ -58,15 +57,13 @@ func newRenderer() *mdhtml.Renderer {
 
 	styleName := "monokailight"
 	highlightStyle := styles.Get(styleName)
-	if highlightStyle == nil {
-		panic(fmt.Sprintf("didn't find style '%s'", styleName))
-	}
+
 	h := Highlighter{
 		htmlFormatter:  htmlFormatter,
 		highlightStyle: highlightStyle,
 	}
 	opts := mdhtml.RendererOptions{
-		Flags:          mdhtml.CommonFlags,
+		Flags:          mdhtml.CommonFlags | mdhtml.TOC | mdhtml.FootnoteReturnLinks,
 		RenderNodeHook: h.myRenderHook,
 	}
 	return mdhtml.NewRenderer(opts)
