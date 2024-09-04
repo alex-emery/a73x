@@ -16,3 +16,7 @@ tasks:
   - setup: |
       cd home
       make public
+triggers:
+  - action: email
+    condition: always 
+    to: build@a73x.sh
