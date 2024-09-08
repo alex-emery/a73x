@@ -96,6 +96,7 @@ func Collect() ([]Page, error) {
 	}
 
 	sortNavBar(gs.Nav)
+
 	pages := []Page{}
 	for _, content := range contents {
 		page, err := renderTemplate(gs, content)

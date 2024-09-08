@@ -60,10 +60,12 @@ func parseMarkdownFile(embedded fs.FS, path string) (Content, error) {
 	if err != nil {
 		return Content{}, fmt.Errorf("failed to parse frontmatter: %v", err)
 	}
-	path = "/" + strings.Replace(path, ".md", "", 1)
-	if path == "/index" {
-		path = "/"
+	path = strings.Replace(path, ".md", "", 1)
+	if path == "index" {
+		path = ""
 	}
+
+	path = "/" + path
 
 	mc := Content{
 		Body: string(rest),
