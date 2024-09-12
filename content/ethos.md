@@ -14,7 +14,7 @@ Social media platforms offer a pretense of community. Google pretends it can hel
 
 You're digital data is farmed and harvested for surveillance capitalism because they couldn't work out how else to squeeze out more money.
 
-So here stands my cornerstone. It represents my part of the internet, where I've placed my flag in my virtual space and declared it mine. A small space subsumed by big tech's centralised web.
+So this is my pièce de résistance. It represents my part of the internet, a small space subsumed by big tech's centralised web.
 
 I believe that a small amount of tech literacy would go a long way. We don't need to commune on centralised platforms; rather, we can set up our own and own them.
 
