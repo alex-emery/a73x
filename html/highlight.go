@@ -52,7 +52,11 @@ func (h Highlighter) myRenderHook(w io.Writer, node ast.Node, entering bool) (as
 	return ast.GoToNext, false
 }
 
-func newRenderer() *mdhtml.Renderer {
+type opts struct {
+}
+
+func newRenderer(hasToc bool) *mdhtml.Renderer {
+
 	htmlFormatter := html.New(html.WithClasses(true), html.TabWidth(2))
 
 	styleName := "monokailight"
@@ -62,8 +66,14 @@ func newRenderer() *mdhtml.Renderer {
 		htmlFormatter:  htmlFormatter,
 		highlightStyle: highlightStyle,
 	}
+
+	flags := mdhtml.CommonFlags | mdhtml.FootnoteReturnLinks
+	if hasToc {
+		flags = flags | mdhtml.TOC
+	}
+
 	opts := mdhtml.RendererOptions{
-		Flags:          mdhtml.CommonFlags | mdhtml.TOC | mdhtml.FootnoteReturnLinks,
+		Flags:          flags,
 		RenderNodeHook: h.myRenderHook,
 	}
 	return mdhtml.NewRenderer(opts)

@@ -5,10 +5,10 @@ import (
 	"github.com/gomarkdown/markdown/parser"
 )
 
-func MDToHTML(md []byte) []byte {
+func MDToHTML(md []byte, hasToc bool) []byte {
 	extensions := parser.CommonExtensions | parser.AutoHeadingIDs | parser.NoEmptyLineBeforeBlock | parser.Footnotes
 	p := parser.NewWithExtensions(extensions)
 
-	renderer := newRenderer()
+	renderer := newRenderer(hasToc)
 	return markdown.ToHTML(md, p, renderer)
 }

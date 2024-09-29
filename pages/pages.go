@@ -48,7 +48,13 @@ func renderTemplate(config GlobalState, content markdown.Content) (string, error
 		return "", fmt.Errorf("failed to execute content template: %v", err)
 	}
 
-	data.Body = string(html.MDToHTML(newContent.Bytes()))
+	hasToc := false
+	_, ok := content.Meta["toc"]
+	if ok {
+		hasToc = content.Meta["toc"].(bool)
+	}
+
+	data.Body = string(html.MDToHTML(newContent.Bytes(), hasToc))
 
 	b := &bytes.Buffer{}
 	if err := t.Execute(b, data); err != nil {
