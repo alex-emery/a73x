@@ -3,12 +3,12 @@ package pages
 import (
 	"bytes"
 	"fmt"
+	"path"
 	"sort"
 	"text/template"
 
 	"git.sr.ht/~a73x/home/html"
 	"git.sr.ht/~a73x/home/markdown"
-	"git.sr.ht/~a73x/home/templates"
 )
 
 type Navigation struct {
@@ -28,9 +28,14 @@ type ParserPair struct {
 func renderTemplate(config GlobalState, content markdown.Content) (string, error) {
 	tmpl := content.Meta["template"]
 	chosenTemplate := fmt.Sprintf("%s.html", tmpl)
-	t, err := template.ParseFS(templates.FS, chosenTemplate, "layouts/*.html")
+	t, err := template.ParseGlob("templates/layouts/*.html")
 	if err != nil {
 		return "", fmt.Errorf("failed to parse layouts: %v", err)
+	}
+
+	t, err = t.ParseFiles(path.Join("templates", chosenTemplate))
+	if err != nil {
+		return "", fmt.Errorf("failed to parse template: %v", err)
 	}
 
 	contentParser, err := template.New("content").Parse(string(content.Body))
@@ -57,7 +62,7 @@ func renderTemplate(config GlobalState, content markdown.Content) (string, error
 	data.Body = string(html.MDToHTML(newContent.Bytes(), hasToc))
 
 	b := &bytes.Buffer{}
-	if err := t.Execute(b, data); err != nil {
+	if err := t.ExecuteTemplate(b, chosenTemplate, data); err != nil {
 		return "", err
 	}
 
@@ -69,8 +74,8 @@ type Page struct {
 	Content string
 }
 
-func Collect() ([]Page, error) {
-	contents, err := markdown.ParseContents()
+func Collect(contentPath string) ([]Page, error) {
+	contents, err := markdown.ParseContents(contentPath)
 	if err != nil {
 		return nil, err
 	}

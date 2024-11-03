@@ -1,13 +1,10 @@
 package web
 
 import (
-	"fmt"
-	"io/fs"
 	"net/http"
 	"time"
 
 	"git.sr.ht/~a73x/home/pages"
-	"git.sr.ht/~a73x/home/public"
 	"go.uber.org/zap"
 )
 
@@ -26,17 +23,14 @@ func New(logger *zap.Logger) (*http.Server, error) {
 	}
 
 	mux := http.NewServeMux()
-	pages, err := pages.Collect()
+	pages, err := pages.Collect("./content")
 	if err != nil {
 		return nil, err
 	}
 
-	staticFs, err := fs.Sub(public.FS, "static")
-	if err != nil {
-		return nil, fmt.Errorf("failed to setup static handler: %v", err)
-	}
+	staticFs := http.FileServer(http.Dir("./public/static"))
 
-	mux.Handle("GET /static/", http.StripPrefix("/static/", http.FileServer(http.FS(staticFs))))
+	mux.Handle("GET /static/", http.StripPrefix("/static/", staticFs))
 	for _, page := range pages {
 		mux.HandleFunc("GET "+page.Path, func(w http.ResponseWriter, r *http.Request) {
 			w.Write([]byte(page.Content))

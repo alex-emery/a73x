@@ -4,10 +4,11 @@ import (
 	"bytes"
 	"fmt"
 	"io/fs"
+	"os"
+	"path"
 	"path/filepath"
 	"strings"
 
-	"git.sr.ht/~a73x/home/content"
 	"github.com/adrg/frontmatter"
 )
 
@@ -17,15 +18,15 @@ type Content struct {
 	Path string
 }
 
-func ParseContents() ([]Content, error) {
-	contentFiles, err := glob(content.FS, ".", ".md")
+func ParseContents(contentPath string) ([]Content, error) {
+	contentFiles, err := glob(contentPath, ".md")
 	if err != nil {
 		return nil, fmt.Errorf("failed to glob: %v", err)
 	}
 
 	res := make([]Content, 0, len(contentFiles))
 	for _, contentFile := range contentFiles {
-		c, err := parseMarkdownFile(content.FS, contentFile)
+		c, err := parseMarkdownFile(contentPath, contentFile)
 		if err != nil {
 			return nil, fmt.Errorf("failed to read markdown file: %v", err)
 		}
@@ -36,11 +37,15 @@ func ParseContents() ([]Content, error) {
 	return res, nil
 }
 
-func glob(embedded fs.FS, dir string, ext string) ([]string, error) {
+// glob returns relative file paths that match the extension
+func glob(dir string, ext string) ([]string, error) {
 	files := []string{}
-	err := fs.WalkDir(embedded, dir, func(path string, d fs.DirEntry, err error) error {
-		if filepath.Ext(path) == ext {
-			files = append(files, path)
+	err := filepath.WalkDir(dir, func(p string, d fs.DirEntry, err error) error {
+		if filepath.Ext(p) == ext {
+			// just diff
+			relPath, _ := filepath.Rel(dir, p)
+
+			files = append(files, relPath)
 		}
 		return nil
 	})
@@ -48,8 +53,8 @@ func glob(embedded fs.FS, dir string, ext string) ([]string, error) {
 	return files, err
 }
 
-func parseMarkdownFile(embedded fs.FS, path string) (Content, error) {
-	input, err := fs.ReadFile(embedded, path)
+func parseMarkdownFile(basePath, contentPath string) (Content, error) {
+	input, err := os.ReadFile(path.Join(basePath, contentPath))
 	if err != nil {
 		return Content{}, fmt.Errorf("failed to read post: %v", err)
 	}
@@ -60,7 +65,8 @@ func parseMarkdownFile(embedded fs.FS, path string) (Content, error) {
 	if err != nil {
 		return Content{}, fmt.Errorf("failed to parse frontmatter: %v", err)
 	}
-	path = strings.Replace(path, ".md", "", 1)
+
+	path := strings.Replace(contentPath, ".md", "", 1)
 	if path == "index" {
 		path = ""
 	}
