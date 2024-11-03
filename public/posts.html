@@ -1,4 +1,4 @@
-{{define "base"}}
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -18,16 +18,40 @@
 	<sub>high effort, low reward</sub>
 	<nav class="nav">
 		<ul>
-			{{ range $vvv, $navPair:= .Nav}}
-			{{ if eq $.Path $navPair.Path }}
-			<li><a href="{{$navPair.Path}}">{{$navPair.Title}}</a></li>
-			{{else}}
-			<li><a class="no-decorations" href="{{$navPair.Path}}">{{$navPair.Title}}</a></li>
-			{{end}}
-			{{end}}
+			
+			
+			<li><a class="no-decorations" href="/">home</a></li>
+			
+			
+			
+			<li><a class="no-decorations" href="/posts">posts</a></li>
+			
+			
+			
+			<li><a class="no-decorations" href="/ethos">ethos</a></li>
+			
+			
 		</ul>
 	</nav>
-	{{ template "content" . }}
+	
+<h1>posts</h1>
+<ul>
+<li><p><a href="/posts/2024-08-25-01.html">Go Benchmarking</a></p></li>
+
+<li><p><a href="/posts/2024-08-25-02.html">Go Project Layouts</a></p></li>
+
+<li><p><a href="/posts/2024-08-25-03.html">Levels of Optimisation</a></p></li>
+
+<li><p><a href="/posts/2024-08-26-01.html">Writing HTTP Handlers</a></p></li>
+
+<li><p><a href="/posts/2024-08-31-01.html">Go&rsquo;s unique pkg</a></p></li>
+
+<li><p><a href="/posts/2024-09-04-01.html">Kubernetes Intro</a></p></li>
+
+<li><p><a href="/posts/2024-09-08-01.html">Building a Static Site with Hugo and Docker</a></p></li>
+</ul>
+
+
 	<footer>
 		<br />​
 		<hr />​​​​​​​​​​​​​​​​​​​<br />​​​​​
@@ -36,4 +60,4 @@
 </body>
 
 </html>
-{{end}}
+

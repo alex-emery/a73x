@@ -1,0 +1,265 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="description" content="Home for a73x" />
+	<meta name="author" content="a73x" />
+	<meta name="viewport"
+		content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width" />
+	<title>a73x</title>
+	<link rel="stylesheet" href="/static/styles.css">
+	<link rel="stylesheet" href="/static/syntax.css">
+</head>
+
+<body>
+	<h1>a73x</h1>
+	<sub>high effort, low reward</sub>
+	<nav class="nav">
+		<ul>
+			
+			
+			<li><a class="no-decorations" href="/">home</a></li>
+			
+			
+			
+			<li><a class="no-decorations" href="/posts">posts</a></li>
+			
+			
+			
+			<li><a class="no-decorations" href="/ethos">ethos</a></li>
+			
+			
+		</ul>
+	</nav>
+	
+<h1>Building a Static Site with Hugo and Docker</h1>
+<nav>
+
+<ul>
+<li><a href="#step-1-installing-hugo">Step 1: Installing Hugo</a></li>
+
+<li><a href="#step-2-creating-a-new-hugo-site">Step 2: Creating a New Hugo Site</a></li>
+
+<li><a href="#step-3-setting-up-a-theme">Step 3: Setting Up a Theme</a></li>
+
+<li><a href="#step-4-personalising-your-site">Step 4: Personalising Your Site</a></li>
+
+<li><a href="#step-5-creating-a-new-post">Step 5: Creating a New Post</a></li>
+
+<li><a href="#step-6-previewing-your-website">Step 6: Previewing Your Website</a></li>
+
+<li><a href="#step-7-publishing-the-website">Step 7: Publishing the Website</a></li>
+
+<li><a href="#step-8-dockerising-your-site">Step 8: Dockerising your Site</a></li>
+
+<li><a href="#step-9-building-and-running-the-docker-image">Step 9: Building and Running the Docker Image</a></li>
+
+<li><a href="#conclusion">Conclusion</a></li>
+</ul>
+
+</nav>
+<p>This will be a quick walkthrough of how to create a static site using Hugo, and use Nginx to serve it.</p>
+
+<p><strong>Prerequisites</strong></p>
+
+<table>
+<thead>
+<tr>
+<th><strong>Skill</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><strong>Basic Terminal Usage</strong></td>
+<td>Familiarity with navigating directories and running basic commands in a terminal.</td>
+</tr>
+
+<tr>
+<td><strong>Git</strong></td>
+<td>Ability to initialize a Git repository, commit changes, and interact with remote repositories.</td>
+</tr>
+
+<tr>
+<td><strong>Markdown</strong></td>
+<td>Knowledge of writing basic content in Markdown format (used for posts).</td>
+</tr>
+
+<tr>
+<td><strong>Docker Basics</strong></td>
+<td>Understanding of Docker commands for building images and running containers.</td>
+</tr>
+
+<tr>
+<td><strong>HTML/CSS Basics</strong></td>
+<td>General awareness of HTML and CSS for customising static site content.<br></td>
+</tr>
+
+<tr>
+<td>Go</td>
+<td>Go should be installed on your system to use Hugo with the <code>go install</code> method. Alternatively, you can download Hugo binaries directly or use a package manager.</td>
+</tr>
+</tbody>
+</table>
+
+<h1 id="step-1-installing-hugo">Step 1: Installing Hugo</h1>
+
+<p>Hugo is a static site generator, meaning it builds HTML, CSS, and JavaScript that doesn&rsquo;t need a backend server, since the website&rsquo;s content is static.</p>
+
+<p>You can install Hugo in multiple ways. If you already have Go installed, you can use</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl">go install github.com/gohugoio/hugo@latest
+</span></span></code></pre>
+<p>Alternatively, you can install Hugo following the <a href="https://gohugo.io/installation/">official install guide</a>&gt;</p>
+
+<h1 id="step-2-creating-a-new-hugo-site">Step 2: Creating a New Hugo Site</h1>
+
+<p>To create a new Hugo site, run:</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl">hugo new site website
+</span></span></code></pre>
+<p>This creates a new folder called <code>website</code> with the basic structure of a Hugo site.</p>
+
+<h1 id="step-3-setting-up-a-theme">Step 3: Setting Up a Theme</h1>
+
+<p>By default, Hugo doesn&rsquo;t ship with any themes installed, so its likely you&rsquo;ll want to add one. A list of pre-made themes exist <a href="https://themes.gohugo.io/">here</a>, which saves you from having to create one from scratch. Typically, this involves using a Git submodule to manage the theme:</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="nb">cd</span> website
+</span></span><span class="line"><span class="cl">git init
+</span></span><span class="line"><span class="cl">git submodule add --depth<span class="o">=</span><span class="m">1</span> https://github.com/adityatelange/hugo-PaperMod.git themes/PaperMod
+</span></span></code></pre>
+<p>A Git submodule is a way to link a separate repository (the theme) into your project without copying it directly. This keeps the theme up-to-date and lets you manage it separately from your main website&rsquo;s content.</p>
+
+<p>To use the theme, add it to your <code>config.toml</code> file:</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s1">&#39;theme = [&#34;PaperMod&#34;]&#39;</span> &gt;&gt; hugo.toml
+</span></span></code></pre>
+<p>Alternatively, you could manually download the theme and place it in the <code>themes</code> folder, but using submodules allows for easier updates.</p>
+
+<h1 id="step-4-personalising-your-site">Step 4: Personalising Your Site</h1>
+
+<p>Open <code>config.toml</code> in your favorite code editor (e.g., VS Code), and change the <code>title</code> line to peronsalise your site&rsquo;s name:</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="nx">title</span> <span class="p">=</span> <span class="s2">&#34;&lt;insert name&gt;&#39;s blog&#34;</span>
+</span></span></code></pre>
+<p>This will update the title of your site, which you’ll see when we generate the site in a moment.</p>
+
+<h1 id="step-5-creating-a-new-post">Step 5: Creating a New Post</h1>
+
+<p>To create a new post, run the following command:</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl">hugo new content content/posts/my-first-post.md
+</span></span></code></pre>
+<p>This will create a new file in the <code>content/posts</code> directory, named <code>my-first-post.md</code>. When you open it, you’ll see:</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl">+++
+</span></span><span class="line"><span class="cl">title = &#39;My First Post&#39;
+</span></span><span class="line"><span class="cl">date = 2024-09-08T15:44:30+01:00
+</span></span><span class="line"><span class="cl">draft = true
+</span></span><span class="line"><span class="cl">+++
+</span></span></code></pre>
+<p>The block of text wrapped in <code>+++</code> is called &ldquo;front matter&rdquo; and acts as metadata for your post. It won&rsquo;t be visible in your generated website, the actual content of your post goes below this.</p>
+
+<p>Now, you can edit the file to include your first post:</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl">+++
+</span></span><span class="line"><span class="cl">title = &#39;My First Post&#39;
+</span></span><span class="line"><span class="cl">date = 2024-09-08T15:44:30+01:00
+</span></span><span class="line"><span class="cl">draft = true
+</span></span><span class="line"><span class="cl">+++
+</span></span><span class="line"><span class="cl"><span class="gu">## Welcome! 
+</span></span></span><span class="line"><span class="cl"><span class="gu"></span>
+</span></span><span class="line"><span class="cl">This is my first post on my new site. It&#39;s written in markdown and utilises hugo for generating html which browsers understand and can parse.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Visit the [<span class="nt">Hugo</span>](<span class="na">https://gohugo.io</span>) website!
+</span></span></code></pre>
+<h1 id="step-6-previewing-your-website">Step 6: Previewing Your Website</h1>
+
+<p>To preview your website locally, run the following command:</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl">hugo server --buildDrafts
+</span></span></code></pre>
+<p>This will start a local server, and you can view your site by visiting <code>http://localhost:1313</code> in your browser.</p>
+
+<h1 id="step-7-publishing-the-website">Step 7: Publishing the Website</h1>
+
+<p>Once you&rsquo;re ready to publish, update your post by changing <code>draft = true</code> to <code>draft = false</code> (or just delete the <code>draft</code> property) and run:</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl">hugo
+</span></span></code></pre>
+<p>This will build your site and place the generated files in the <code>public</code> folder. This folder contains all the HTML, CSS, and JavaScript that make up your static site.</p>
+
+<p>From here you can deploy it following [Hugo&rsquo;s own guide](<a href="https://gohugo.io/categories/hosting-and-deployment/">https://gohugo.io/categories/hosting-and-deployment/</a>. However, most of these options involve using someone else&rsquo;s compute, and our goal here is self hosting.</p>
+
+<h1 id="step-8-dockerising-your-site">Step 8: Dockerising your Site</h1>
+
+<p>Now that you have a static site in the <code>public</code> folder, let&rsquo;s create a Docker image that will serve your site using Nginx, a lightweight web server. While you could install Nginx directly on a server and follow <a href="https://gohugo.io/hosting-and-deployment/deployment-with-rclone/">this guide</a>  to deploy your site, using Docker offers several advantages. Containers provide a reproducible, isolated environment that makes it easy to package, run, and deploy your site across different systems. So, let&rsquo;s use Docker to handle serving your site instead.</p>
+
+<p>Create a <code>Dockerfile</code> with the following content</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="k">FROM</span><span class="s"> nginx:1.27.1</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="k">COPY</span> public /usr/share/nginx/html<span class="err">
+</span></span></span></code></pre>
+<p>This tells Docker to use the official Nginx image and copy the files from your <code>public</code> folder (which Hugo generated) into the default location that Nginx serves from.</p>
+
+<h1 id="step-9-building-and-running-the-docker-image">Step 9: Building and Running the Docker Image</h1>
+
+<p>To proceed, you&rsquo;ll need a container registry. We&rsquo;ll use Docker hub for this example (you&rsquo;ll need an account) but you can use whatever container registry you have access to.</p>
+
+<p>To build your Docker image, run:</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl">docker build . -t &lt;dockerusername&gt;website:0.0.1
+</span></span></code></pre>
+<p>Here:</p>
+
+<ul>
+<li><code>-t &lt;dockerusername&gt;website:0.0.1</code> tags the image with a name (<code>&lt;dockerusername/website</code>) and a version (<code>0.0.1</code>), which will be important later when you want to publish it.</li>
+<li>the <code>.</code> tells Docker to build the image from the current directory (which contains your <code>Dockerfile</code> and <code>public</code> folder).</li>
+</ul>
+
+<p>Now that you have the Docker image locally, you can run it using</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl">docker run -p 8080:80 &lt;dockerusername&gt;website:0.0.1
+</span></span></code></pre>
+<p>Here, <code>-p 8080:80</code> maps port 8080 on your local machine to port 80 in the Docker container, where Nginx serves the content.</p>
+
+<p>Now, open a browser and go to <code>http://localhost:8080</code>. You should see your static site served by Nginx!</p>
+
+<p>But your server is not your local machine (potentially), so you need a method of getting the image from your local machine, to your server. We can use container registries as an intermediary.</p>
+
+<ol>
+<li>First login to Docker Hub:</li>
+</ol>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl">docker login
+</span></span></code></pre>
+<ol>
+<li>Push your image to Docker Hub, by default this image will be public.</li>
+</ol>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="sb">`</span>docker push &lt;dockerusername&gt;website:0.0.1
+</span></span></code></pre>
+<ol>
+<li>SSH into the server</li>
+</ol>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl">ssh user@server-ip
+</span></span></code></pre>
+<ol>
+<li>Pull the Image (we don&rsquo;t need to login since the image is public):</li>
+</ol>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl">docker &lt;dockerusername&gt;website:0.0.1
+</span></span></code></pre>
+<ol>
+<li>Run the Docker Image</li>
+</ol>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl">docker run -d -p 80:80 &lt;dockerusername&gt;website:0.0.1
+</span></span></code></pre>
+<ul>
+<li><code>-d</code> runs the container in detached mode (in the background).</li>
+<li><code>-p 80:80</code> maps port 80 of the container (where Nginx is running) to port 80 on the server, making the website accessible via the server&rsquo;s IP address in a browser.</li>
+</ul>
+
+<p>You will be able to access the website by visiting <code>http://server-ip:80</code></p>
+
+<h1 id="conclusion">Conclusion</h1>
+
+<p>Congratulations on creating and running your first static website with Hugo and Docker!</p>
+
+
+	<footer>
+		<br />​
+		<hr />​​​​​​​​​​​​​​​​​​​<br />​​​​​
+		<p>see something you disagree with? email: <a href="mailto:yourewrong@a73x.sh">yourewrong@a73x.sh</a></p>
+	</footer>
+</body>
+
+</html>
+

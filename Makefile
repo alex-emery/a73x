@@ -1,9 +1,14 @@
 VERSION=0.0.1
 DOCKER_IMAGE=a73xsh/home:${VERSION}
 
+
+.PHONY: build 
+build: 
+	go run ./cmd/build
+
 .PHONY: serve 
 serve: 
-	go run ./cmd/home
+	go run ./cmd/serve
 
 .PHONY: css
 css:

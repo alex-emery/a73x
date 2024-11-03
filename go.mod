@@ -1,6 +1,6 @@
 module git.sr.ht/~a73x/home
 
-go 1.22.5
+go 1.23
 
 require (
 	github.com/adrg/frontmatter v0.2.0

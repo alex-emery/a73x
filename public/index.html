@@ -1,0 +1,97 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="description" content="Home for a73x" />
+	<meta name="author" content="a73x" />
+	<meta name="viewport"
+		content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width" />
+	<title>a73x</title>
+	<link rel="stylesheet" href="/static/styles.css">
+	<link rel="stylesheet" href="/static/syntax.css">
+</head>
+
+<body>
+	<h1>a73x</h1>
+	<sub>high effort, low reward</sub>
+	<nav class="nav">
+		<ul>
+			
+			
+			<li><a class="no-decorations" href="/">home</a></li>
+			
+			
+			
+			<li><a class="no-decorations" href="/posts">posts</a></li>
+			
+			
+			
+			<li><a class="no-decorations" href="/ethos">ethos</a></li>
+			
+			
+		</ul>
+	</nav>
+	
+<h1>home</h1>
+<p>Welcome!</p>
+
+<h1 id="me">me</h1>
+
+<ul>
+<li>backend cloud software engineer</li>
+<li>lang: go</li>
+<li>infra: kubernetes</li>
+</ul>
+
+<h1 id="tidbits">tidbits</h1>
+
+<h2 id="go">#go</h2>
+
+<ul>
+<li>layout packages by what they do, not by their abstract type</li>
+<li>use channels sparingly: write synchronous methods and allow the caller to make it async</li>
+<li><code>append</code> modifies the underlying slice, you&rsquo;ll only make this mistake once</li>
+<li>define interfaces where you use them</li>
+<li><code>make([]int, 5)</code> has a length and capacity of 5. <code>([]int, 0,5)</code> has a length of 0 and capacity of 5.<br>
+<code>append()</code> will only do what you want with the latter</li>
+<li>don&rsquo;t use <code>init()</code></li>
+<li>TFBO (test, fix, benchmark, optimise)</li>
+<li>more CPU != more performance<br>
+more CPU == more contention</li>
+</ul>
+
+<h2 id="git">#git</h2>
+
+<ul>
+<li><code>git reflog</code></li>
+<li><code>git commit --fixup=&lt;COMMITISH&gt;</code><br>
+<code>git rebase origin/main --autosquash</code></li>
+</ul>
+
+<h1 id="resources">resources</h1>
+
+<ul>
+<li><a href="https://cs.opensource.google/go/go/+/refs/tags/go1.23.0:src/runtime/proc.go"><code>proc.go</code></a></li>
+<li><a href="https://github.com/golang/go/issues/67120">proposal: runtime/metrics: define a recommended set of metrics</a></li>
+</ul>
+
+<h1 id="books">books</h1>
+
+<ul>
+<li><a href="https://www.oreilly.com/library/view/designing-data-intensive-applications/9781491903063">Designing Data Intensive Applications</a></li>
+<li><a href="https://www.oreilly.com/library/view/database-internals/9781492040330">Database Internals</a></li>
+<li><a href="https://www.oreilly.com/library/view/efficient-go/9781098105709">Efficient Go</a></li>
+</ul>
+
+
+	<footer>
+		<br />​
+		<hr />​​​​​​​​​​​​​​​​​​​<br />​​​​​
+		<p>see something you disagree with? email: <a href="mailto:yourewrong@a73x.sh">yourewrong@a73x.sh</a></p>
+	</footer>
+</body>
+
+</html>
+

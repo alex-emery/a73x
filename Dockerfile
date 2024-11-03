@@ -6,7 +6,8 @@ COPY go.mod go.sum ./
 RUN go mod download && go mod verify
 
 COPY . .
-RUN CGO_ENABLED=0 go build -ldflags="-s -w" -o /usr/local/bin/app ./cmd/home/
+RUN CGO_ENABLED=0 go run ./cmd/build
+RUN CGO_ENABLED=0 go build -ldflags="-s -w" -o /usr/local/bin/app ./cmd/serve/
 
 FROM scratch 
 

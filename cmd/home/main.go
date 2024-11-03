@@ -16,7 +16,7 @@ func main() {
 		logger.Fatal("failed to start webserver", zap.Error(err))
 	}
 
-	done := make(chan os.Signal, 1)
+	done := make(chan os.Signal, 0)
 	signal.Notify(done, os.Interrupt, syscall.SIGINT, syscall.SIGTERM)
 	logger.Info("Starting web server")
 

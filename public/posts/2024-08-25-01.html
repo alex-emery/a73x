@@ -1,0 +1,117 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="description" content="Home for a73x" />
+	<meta name="author" content="a73x" />
+	<meta name="viewport"
+		content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width" />
+	<title>a73x</title>
+	<link rel="stylesheet" href="/static/styles.css">
+	<link rel="stylesheet" href="/static/syntax.css">
+</head>
+
+<body>
+	<h1>a73x</h1>
+	<sub>high effort, low reward</sub>
+	<nav class="nav">
+		<ul>
+			
+			
+			<li><a class="no-decorations" href="/">home</a></li>
+			
+			
+			
+			<li><a class="no-decorations" href="/posts">posts</a></li>
+			
+			
+			
+			<li><a class="no-decorations" href="/ethos">ethos</a></li>
+			
+			
+		</ul>
+	</nav>
+	
+<h1>Go Benchmarking</h1>
+<nav>
+
+<ul>
+<li><a href="#cpuprofile">cpuprofile</a></li>
+
+<li><a href="#memprofile">memprofile</a></li>
+
+<li><a href="#pprof">pprof</a>
+<ul>
+<li><a href="#views">views</a></li>
+</ul></li>
+</ul>
+
+</nav>
+<p>The benchmark cycle:</p>
+
+<ol>
+<li>write a benchmark</li>
+<li>run a benchmark</li>
+<li>get a profile</li>
+<li>optimise</li>
+<li>run your tests</li>
+<li>goto 2.</li>
+</ol>
+
+<h1 id="cpuprofile">cpuprofile</h1>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl">go <span class="nb">test</span> -test<span class="o">=</span>XXX -bench &lt;regex&gt; -cpuprofile &lt;file&gt;
+</span></span></code></pre>
+<h1 id="memprofile">memprofile</h1>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl">go <span class="nb">test</span> -test<span class="o">=</span>XXX -bench &lt;regex&gt; -memprofile &lt;file&gt; -benchmem
+</span></span></code></pre>
+<h1 id="pprof">pprof</h1>
+
+<p><a href="https://github.com/google/pprof/blob/main/doc/README.md">pprof usage</a></p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl">go pprof -http<span class="o">=</span>:8080 profile.pb.gz
+</span></span></code></pre>
+<p>will show a web UI for analysing the profile.</p>
+
+<h2 id="views">views</h2>
+
+<ul>
+<li>flame graph: <code>localhost:8080/ui/flamegraph</code>
+
+<ul>
+<li>shows percentage breakdown of how much resource each &ldquo;call&rdquo; made.</li>
+<li>clicking a box will make it &ldquo;100%&rdquo; allowing for deep diving</li>
+<li>right click &ldquo;show source code&rdquo; to view</li>
+</ul></li>
+<li>top: <code>localhost:8080/ui/top</code>
+
+<ul>
+<li>shows top functions
+
+<ul>
+<li><code>flat</code>: profile samples in this function</li>
+<li><code>cum</code>: (cumulative) profile samples in this function and its callees</li>
+</ul></li>
+</ul></li>
+<li>source: <code>localhost:8080/ui/source</code>
+
+<ul>
+<li>each source line is annotated with the time spent in that source line
+
+<ul>
+<li>the first number does not count time spent in functions called from the source line</li>
+<li>the second number does</li>
+</ul></li>
+</ul></li>
+</ul>
+
+
+	<footer>
+		<br />​
+		<hr />​​​​​​​​​​​​​​​​​​​<br />​​​​​
+		<p>see something you disagree with? email: <a href="mailto:yourewrong@a73x.sh">yourewrong@a73x.sh</a></p>
+	</footer>
+</body>
+
+</html>
+

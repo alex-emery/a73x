@@ -1,0 +1,96 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="description" content="Home for a73x" />
+	<meta name="author" content="a73x" />
+	<meta name="viewport"
+		content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width" />
+	<title>a73x</title>
+	<link rel="stylesheet" href="/static/styles.css">
+	<link rel="stylesheet" href="/static/syntax.css">
+</head>
+
+<body>
+	<h1>a73x</h1>
+	<sub>high effort, low reward</sub>
+	<nav class="nav">
+		<ul>
+			
+			
+			<li><a class="no-decorations" href="/">home</a></li>
+			
+			
+			
+			<li><a class="no-decorations" href="/posts">posts</a></li>
+			
+			
+			
+			<li><a class="no-decorations" href="/ethos">ethos</a></li>
+			
+			
+		</ul>
+	</nav>
+	
+<h1>Go's unique pkg</h1>
+<p><a href="https://pkg.go.dev/unique">https://pkg.go.dev/unique</a></p>
+
+<blockquote>
+<p>The unique package provides facilities for canonicalising (&ldquo;interning&rdquo;) comparable values.<sup class="footnote-ref" id="fnref:1"><a href="#fn:1">1</a></sup></p>
+</blockquote>
+
+<p>oh yeah, thats obvious I fully understand what this package does now, great read, tune in for the next post.</p>
+
+<p>Interning, is the re-use of an object of equal value instead of creating a new one. I&rsquo;m pretending I knew this but really I&rsquo;ve just reworded <a href="https://en.wikipedia.org/wiki/Interning_(computer_science)">Interning</a>.</p>
+
+<p>So lets try again.</p>
+
+<p>If you&rsquo;re parsing out a csv of bank transactions, its very likely a lot of names will be repeated. Instead of allocating memory for each string representing a merchant, you can simply reuse the the same string.</p>
+
+<p>So the dumbed down version might look like</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">internedStrings</span> <span class="nx">sync</span><span class="p">.</span><span class="nx">Map</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">Intern</span><span class="p">(</span><span class="nx">s</span> <span class="kt">string</span><span class="p">)</span> <span class="kt">string</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">val</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">internedStrings</span><span class="p">.</span><span class="nf">Load</span><span class="p">(</span><span class="nx">s</span><span class="p">);</span> <span class="nx">ok</span> <span class="p">{</span> 
+</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="nx">val</span><span class="p">.(</span><span class="kt">string</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl">	<span class="p">}</span> 
+</span></span><span class="line"><span class="cl">	<span class="nx">internedStrings</span><span class="p">.</span><span class="nf">Store</span><span class="p">(</span><span class="nx">s</span><span class="p">,</span> <span class="nx">s</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="nx">s</span> 
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre>
+<p>With a small demo here <a href="https://go.dev/play/p/piSYjCHIcLr">https://go.dev/play/p/piSYjCHIcLr</a></p>
+
+<p>This implementation is fairly naive, it can only grow and it only works with strings, so naturally go&rsquo;s implementation is a better.</p>
+
+<p>It&rsquo;s also worth noting, that since strings are a pointer under the hood</p>
+
+<blockquote>
+<p>When comparing two strings, if the pointers are not equal, then we must compare their contents to determine equality. But if we know that two strings are canonicalized, then it <em>is</em> sufficient to just check their pointers.<sup class="footnote-ref" id="fnref:2"><a href="#fn:2">2</a></sup></p>
+</blockquote>
+
+<p>So to recap, goes <code>unique</code> package provides a way to reuse objects instead of creating new ones, if we consider the objects of equal value.</p>
+
+<div class="footnotes">
+
+<hr>
+
+<ol>
+<li id="fn:1"><a href="https://pkg.go.dev/unique">https://pkg.go.dev/unique</a> <a class="footnote-return" href="#fnref:1"><sup>[return]</sup></a></li>
+
+<li id="fn:2"><a href="https://go.dev/blog/unique">https://go.dev/blog/unique</a> <a class="footnote-return" href="#fnref:2"><sup>[return]</sup></a></li>
+</ol>
+
+</div>
+
+
+	<footer>
+		<br />​
+		<hr />​​​​​​​​​​​​​​​​​​​<br />​​​​​
+		<p>see something you disagree with? email: <a href="mailto:yourewrong@a73x.sh">yourewrong@a73x.sh</a></p>
+	</footer>
+</body>
+
+</html>
+

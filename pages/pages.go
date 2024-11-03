@@ -115,13 +115,8 @@ func Collect(contentPath string) ([]Page, error) {
 			return nil, fmt.Errorf("failed to build site: %v", err)
 		}
 
-		path := content.Path
-		if path == "index" {
-			path = ""
-		}
-
 		pages = append(pages, Page{
-			Path:    path,
+			Path:    content.Path,
 			Content: page,
 		})
 	}

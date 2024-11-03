@@ -1,0 +1,165 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="description" content="Home for a73x" />
+	<meta name="author" content="a73x" />
+	<meta name="viewport"
+		content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width" />
+	<title>a73x</title>
+	<link rel="stylesheet" href="/static/styles.css">
+	<link rel="stylesheet" href="/static/syntax.css">
+</head>
+
+<body>
+	<h1>a73x</h1>
+	<sub>high effort, low reward</sub>
+	<nav class="nav">
+		<ul>
+			
+			
+			<li><a class="no-decorations" href="/">home</a></li>
+			
+			
+			
+			<li><a class="no-decorations" href="/posts">posts</a></li>
+			
+			
+			
+			<li><a class="no-decorations" href="/ethos">ethos</a></li>
+			
+			
+		</ul>
+	</nav>
+	
+<h1>Kubernetes Intro</h1>
+<nav>
+
+<ul>
+<li><a href="#pods">Pods</a>
+<ul>
+<li><a href="#why-multiple-containers-in-a-pod">Why Multiple Containers in a Pod?</a></li>
+
+<li><a href="#pod-placement">Pod Placement</a></li>
+
+<li><a href="#scaling">Scaling</a></li>
+</ul></li>
+
+<li><a href="#services">Services</a></li>
+
+<li><a href="#volumes">Volumes</a>
+<ul>
+<li><a href="#key-components-of-kubernetes-storage">Key Components of Kubernetes Storage</a></li>
+
+<li><a href="#how-it-works-together">How It Works Together</a></li>
+</ul></li>
+</ul>
+
+</nav>
+<p>My crash course to Kubernetes.
+You&rsquo;re welcome.</p>
+
+<h1 id="pods">Pods</h1>
+
+<p>In Kubernetes, if you wish to deploy an application the most basic component you would use to achieve that, is a pod. A Pod represents the smallest deployable unit in Kubernetes, encapsulating one or more containers that need to work together. While containers run the actual application code, Pods provide the environment necessary for these containers to operate, including shared networking and storage.</p>
+
+<p>A Pod usually represents an ephemeral single instance of a running process or application. For example, a Pod might contain just one container running a web server. In more complex scenarios, a Pod could contain multiple containers that work closely together, such as a web server container and a logging agent container.</p>
+
+<p>Additionally we consider a Pod as ephemeral because when a Pod dies, it can&rsquo;t be brought back to life—Kubernetes would create a new instance instead. This behaviour reinforces the idea that Pods are disposable and should be designed to handle failures gracefully.</p>
+
+<p>When you use Docker, you might build a image with <code>docker build . -t foo:bar</code> and run a container with <code>docker run foo:bar</code>. In Kubernetes, to run that same container, you place it inside a Pod, since Kubernetes manages containers through Pods.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">v1</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">Pod</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">&lt;my pod name here&gt; </span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">containers</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">&lt;my container name here&gt; </span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l">foo:bar</span><span class="w">
+</span></span></span></code></pre>
+<p>In this YAML manifest, we define the creation of a Pod using the <code>v1</code> API version. The <code>metadata</code> field is used to provide a name for identifying the Pod within the Kubernetes cluster. Inside the <code>spec</code>, the <code>containers</code> section lists all the containers that will run within that Pod.</p>
+
+<p>Each container has its own name and image, similar to the <code>--name</code> and image parameters used in the <code>docker run</code> command. However, in Kubernetes, these containers are encapsulated within a Pod, ensuring that they are always co-scheduled, co-located, and share the same execution context.</p>
+
+<p>As a result, containers within a Pod should be tightly coupled, meaning they should work closely together, typically as parts of a single application or service. This design ensures that the containers can efficiently share resources like networking and storage while providing a consistent runtime environment.</p>
+
+<h2 id="why-multiple-containers-in-a-pod">Why Multiple Containers in a Pod?</h2>
+
+<p>Sometimes, you might need multiple containers within a single Pod. Containers in a Pod share the same network namespace, meaning they can communicate with each other via <code>localhost</code>. They also share storage volumes, which can be mounted at different paths within each container. This setup is particularly useful for patterns like sidecars, where an additional container enhances or augments the functionality of the main application without modifying it.</p>
+
+<p>For example, imagine your application writes logs to <code>/data/logs</code>. You could add a second container in the Pod running <code>fluent-bit</code>, a tool that reads in files and sends them to a user defined destination. <code>fluent-bit</code> reads these logs and forwards them to an external log management service, without changing the original application code. This separation also ensures that if the logging container fails, it won’t affect the main application’s operation.</p>
+
+<p>When deciding what containers go in a pod, consider how they&rsquo;re coupled. Questions like &ldquo;how should these scale&rdquo; might be helpful. If you have two containers, one for a web server and one for a database, as your web server traffic goes up, it doesn&rsquo;t really make sense to start creating more instances of the database. So you would put your web server in one pod and your database in another, allowing Kubernetes to scale them independently. On the other hand a container which shares a volume with the web server would need to scale on a 1:1 basis, so they go in the same pod.</p>
+
+<h2 id="pod-placement">Pod Placement</h2>
+
+<p>When a Pod is created, Kubernetes assigns it to a Node—a physical or virtual machine in the cluster—using a component called the scheduler. The scheduler considers factors like resource availability, node labels, and any custom scheduling rules you’ve defined (such as affinity or anti-affinity) when making this decision. Affinity means the pods go together, anti-affinity means keep them on separate nodes. Other rules can be used to direct Pods to specific Nodes, such as ensuring that GPU-based Pods run only on GPU-enabled Nodes.</p>
+
+<h2 id="scaling">Scaling</h2>
+
+<p>In practise,  you won&rsquo;t be managing pods manually. If a pod crashes, manual intervention would be required to start a new Pod and clean up the old one. Fortunately, Kubernetes provides controllers to manage Pods for you: Deployments, StatefulSets, DaemonSets, and Jobs.</p>
+
+<ul>
+<li>Deployments are best used for stateless workloads, where Pods don&rsquo;t need to persist state across restarts.</li>
+<li>StatefulSets are ideal for when you need a Pod to be redeployed with the same storage volume to maintain data continuity.</li>
+<li>DaemonSets ensure that a copy of a Pod runs on each Node, useful for tasks like Node level monitoring or logging.</li>
+<li>Jobs are used for 1 off tasks that have an end goal, as opposed to a deployment which runs forever. Example jobs might be running a data migration script. A CronJob is a job that runs on a schedule, like running a weekly backup.</li>
+</ul>
+
+<p>Deployments and StatefulSets also support scaling mechanisms, allowing you to increase or decrease the number of Pods to handle varying levels of traffic.</p>
+
+<h1 id="services">Services</h1>
+
+<p>As your application scales and you handle multiple Pods, you need a way to keep track of them for access. Since Pods can change names and IP addresses when they are recreated, you need a stable way to route traffic to them. This is where Kubernetes services come into play.</p>
+
+<p>Services provide an abstraction layer that allows you to access a set of Pods without needing to track their individual IP addresses. You define a selector in the Service configuration and traffic reaching the Service is routed to one of the Pods matching the selector.</p>
+
+<p>There are four types of services in Kubernetes: <code>ClusterIP</code>, <code>NodePort</code>, <code>LoadBalancer</code>, and <code>ExternalName</code>.</p>
+
+<ul>
+<li><p>ClusterIP is the default service type. It provides an internal IP address accessible only within the cluster. Other Pods can use this IP or the DNS name of the service to connect.</p></li>
+
+<li><p>NodePort exposes a specific port on each Node. This allows external traffic to reach the service via the Node&rsquo;s IP address and designated port. NodePort services also have a ClusterIP, so they are accessible within the cluster as well.</p></li>
+
+<li><p>LoadBalancer integrates with external load balancers (typically provided by cloud providers) to expose a service to the internet. Kubernetes itself doesn&rsquo;t have a load balancer component so external infrastructure is required.</p></li>
+
+<li><p>ExternalName maps a Service to an external DNS name. This can be useful for migrating services into a cluster or for redirecting traffic to an external resource until the migration is complete.</p></li>
+</ul>
+
+<h1 id="volumes">Volumes</h1>
+
+<p>Broadly speaking, Kubernetes offers two types of storage: ephemeral and persistent volumes.</p>
+
+<ul>
+<li>Ephemeral volumes have the same lifespan as the Pod they are attached to, meaning they are deleted when the Pod is deleted. These are typically used for temporary data, such as caching, that doesn&rsquo;t need to be preserved once the Pod&rsquo;s lifecycle ends.</li>
+<li>Persistent volumes, on the other hand, outlive individual Pods. They are essential for stateful applications that require data to persist across Pod restarts or replacements. This persistent storage ensures that critical data remains available even as the Pods using it are recreated or rescheduled.</li>
+</ul>
+
+<p>Understanding storage in Kubernetes can be a bit complex due to its abstraction and reliance on third-party controllers. Kubernetes uses the Container Storage Interface (CSI), a standardised specification that allows it to request storage from different providers, which then manage the lifecycle of the underlying storage. This storage could be anything from a local directory on a node to an AWS Elastic Block Store (EBS) volume. Kubernetes abstracts the details and relies on the CSI-compliant controller to handle the specifics.</p>
+
+<h2 id="key-components-of-kubernetes-storage">Key Components of Kubernetes Storage</h2>
+
+<p>There are three main components to understand when dealing with storage in Kubernetes: Storage Classes, PersistentVolumes (PVs), and PersistentVolumeClaims (PVCs).</p>
+
+<ol>
+<li>Storage Class: A Storage Class defines the type of storage and the parameters required to provision it. Each Storage Class corresponds to a specific storage provider or controller. For example, a Storage Class might define a template for AWS EBS volumes or Google Cloud Persistent Disks.</li>
+<li>PersistentVolume (PV): A PersistentVolume represents a piece of storage in the cluster that has been provisioned according to the specifications in a Storage Class. PVs can be either statically created by a cluster administrator or dynamically provisioned by a controller. For instance, when a Storage Class is associated with AWS, the controller might create an EBS volume when a PV is needed.</li>
+<li>PersistentVolumeClaim (PVC): A PersistentVolumeClaim is a user&rsquo;s request for storage. It specifies the desired size, access modes, and Storage Class. When a PVC is created, Kubernetes will find a matching PV or trigger the dynamic provisioning of a new one through the associated Storage Class and controller. Once a PV is provisioned, it becomes bound to the PVC, ensuring that the requested storage is dedicated to that specific claim.</li>
+</ol>
+
+<h2 id="how-it-works-together">How It Works Together</h2>
+
+<p>The typical workflow involves a user creating a PersistentVolumeClaim to request storage. The CSI controller picks up this request and, based on the associated Storage Class, dynamically provisions a PersistentVolume that meets the user&rsquo;s specifications. This PersistentVolume is then bound to the PersistentVolumeClaim, making the storage available to the Pod that needs it.</p>
+
+
+	<footer>
+		<br />​
+		<hr />​​​​​​​​​​​​​​​​​​​<br />​​​​​
+		<p>see something you disagree with? email: <a href="mailto:yourewrong@a73x.sh">yourewrong@a73x.sh</a></p>
+	</footer>
+</body>
+
+</html>
+

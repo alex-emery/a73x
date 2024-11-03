@@ -1,0 +1,91 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="description" content="Home for a73x" />
+	<meta name="author" content="a73x" />
+	<meta name="viewport"
+		content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width" />
+	<title>a73x</title>
+	<link rel="stylesheet" href="/static/styles.css">
+	<link rel="stylesheet" href="/static/syntax.css">
+</head>
+
+<body>
+	<h1>a73x</h1>
+	<sub>high effort, low reward</sub>
+	<nav class="nav">
+		<ul>
+			
+			
+			<li><a class="no-decorations" href="/">home</a></li>
+			
+			
+			
+			<li><a class="no-decorations" href="/posts">posts</a></li>
+			
+			
+			
+			<li><a class="no-decorations" href="/ethos">ethos</a></li>
+			
+			
+		</ul>
+	</nav>
+	
+<h1>ethos</h1>
+<p>Yes, this site has an ethos.</p>
+
+<p>This site was born out of the belief that the current state of the internet is wrong.
+As things currently stand, the internet is predominantly controlled by big tech, but it is a decentralised system, a series of interconnected networked devices that communicate over a standardised protocol.</p>
+
+<p>Users flock to singular points on the modern internet, controlled and governed by megacorps. These points are where you go to give up your privacy and digital rights, in exchange for a service.</p>
+
+<p>Social media platforms offer a pretense of community. Google pretends it can help you navigate the vast web, serving you results relevant to what you&rsquo;re looking for, funnelling you to whoever is willing to pay the most to appear at the top of that list, and tracking you for possibilities of targeted advertising.</p>
+
+<p>You&rsquo;re digital data is farmed and harvested for surveillance capitalism because they couldn&rsquo;t work out how else to squeeze out more money.</p>
+
+<p>So this is my pièce de résistance. It represents my part of the internet, a small space subsumed by big tech&rsquo;s centralised web.</p>
+
+<p>I believe that a small amount of tech literacy would go a long way. We don&rsquo;t need to commune on centralised platforms; rather, we can set up our own and own them.</p>
+
+<p>This site runs on a single-node Kubernetes cluster hosted on an old Lenovo M910Q. It runs an <code>i5-6500T</code> (4 core) and has 8GB of RAM.
+I bought it in 2021 for £189.99.</p>
+
+<p>If I check this online against AWS, an equivalent machine might be a <code>c6g.xlarge</code> (4vcpu 8GiB) with an EC2 Instance Savings Plan; for three years, it would have cost $1597.82 upfront. I&rsquo;ve ignored the cost of electricity. I have some breathing room, but this little device has already saved me considerable money. I&rsquo;ve used it to host quite a few services over the years such as <a href="https://tt-rss.org/">Tiny Tiny RSS</a>,<a href="https://miniflux.app/">Miniflux</a>, <a href="https://ergo.chat/">Ergochat</a>, <a href="https://github.com/dani-garcia/vaultwarden">vaultwarden</a>, <a href="https://immich.app/">Immich</a>, <a href="https://nextcloud.com/">NextCloud</a>, <a href="https://matrix.org/">Matrix</a>, <a href="https://git.zx2c4.com/cgit/">cigt</a>, etc; the list goes on.</p>
+
+<p>Currently, it only runs Miniflux, ergochat, cgit, and this site.</p>
+
+<p>Someone somewhere might be angrily shaking their fist, declaring that this is no way to run a &ldquo;production&rdquo; environment.
+I have no data backup or failover nodes — and I&rsquo;d agree.
+Miniflux exports its content as an XML, IRC is ephemeral, and this site is git versioned on sr.ht.</p>
+
+<p>I don&rsquo;t need my RSS reader to be highly available; if it&rsquo;s broken, I&rsquo;ll fix it.</p>
+
+<p>For things to be cost-practical, I would have to sink down to a <code>t2.micro</code> (1 core 1GiB), which costs $152 for 3 years, but then I&rsquo;d only have 1 core and 1GiB.</p>
+
+<p>And whilst I tend to my flock of a single node server, I learn more about the system. Kubernetes, firewalls, DNS, DHCP, etc., a responsibility delegated away or hidden behind interfaces when using cloud services.</p>
+
+<p>Using your equipment is cost-effective, leaving you room to trial services you&rsquo;re interested in. You can also simply remove them when they&rsquo;re no longer required.</p>
+
+<p>As for the site itself I&rsquo;ve chosen a minimal design, keeping javascript to a minimum and serving only static content.
+I want the site to work consistently across all browsers, be readable on all devices, and continue to work into the future.</p>
+
+<p>The aim here is to build a place to share the things I&rsquo;ve learnt. This space serves as an attempt to counter the low-effort writings found on Medium and write more human content as we see more AI-generated drivel. Over time, I intend to curate my posts, merging, filtering, and ultimately removing irrelevant ones.</p>
+
+<p>I work as a cloud developer, writing primarily in go (this might explain my chosen minimal design choice), so the content I write through that lens.</p>
+
+<p>I intend to provide information about how one can go about setting up a site like this and administering it yourself.
+As a go developer, I&rsquo;ll also include things I&rsquo;ve learned and am learning.</p>
+
+
+	<footer>
+		<br />​
+		<hr />​​​​​​​​​​​​​​​​​​​<br />​​​​​
+		<p>see something you disagree with? email: <a href="mailto:yourewrong@a73x.sh">yourewrong@a73x.sh</a></p>
+	</footer>
+</body>
+
+</html>
+
