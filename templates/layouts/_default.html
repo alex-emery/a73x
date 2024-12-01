@@ -14,25 +14,28 @@
 </head>
 
 <body>
-	<h1>a73x</h1>
-	<sub>high effort, low reward</sub>
-	<nav class="nav">
-		<ul>
-			{{ range $vvv, $navPair:= .Nav}}
-			{{ if eq $.Path $navPair.Path }}
-			<li><a href="{{$navPair.Path}}">{{$navPair.Title}}</a></li>
-			{{else}}
-			<li><a class="no-decorations" href="{{$navPair.Path}}">{{$navPair.Title}}</a></li>
-			{{end}}
-			{{end}}
-		</ul>
-	</nav>
-	{{ template "content" . }}
-	<footer>
-		<br />​
-		<hr />​​​​​​​​​​​​​​​​​​​<br />​​​​​
-		<p>see something you disagree with? email: <a href="mailto:yourewrong@a73x.sh">yourewrong@a73x.sh</a></p>
-	</footer>
+	<main>
+		<h1>a73x</h1>
+		<sub>high effort, low reward</sub>
+		<nav class="nav">
+			<ul>
+				{{ range $vvv, $navPair:= .Nav}}
+				{{ if eq $.Path $navPair.Path }}
+				<li><a href="{{$navPair.Path}}">{{$navPair.Title}}</a></li>
+				{{else}}
+				<li><a class="no-decorations" href="{{$navPair.Path}}">{{$navPair.Title}}</a></li>
+				{{end}}
+				{{end}}
+			</ul>
+		</nav>
+		{{ template "content" . }}
+		<footer>
+			<br />
+			<hr />
+			​​​​​​​​​​​​​​​​​​​<br />​
+			<p>see something you disagree with? email: <a href="mailto:yourewrong@a73x.sh">yourewrong@a73x.sh</a></p>
+		</footer>
+	</main>
 </body>
 
 </html>
