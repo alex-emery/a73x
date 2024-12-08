@@ -1,0 +1,101 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="description" content="Home for a73x" />
+	<meta name="author" content="a73x" />
+	<meta name="viewport"
+		content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width" />
+	<title>a73x</title>
+	<link rel="stylesheet" href="/static/styles.css">
+	<link rel="stylesheet" href="/static/syntax.css">
+</head>
+
+<body>
+	<main>
+		<h1>a73x</h1>
+		<sub>high effort, low reward</sub>
+		<nav class="nav">
+			<ul>
+				
+				
+				<li><a class="no-decorations" href="/">home</a></li>
+				
+				
+				
+				<li><a class="no-decorations" href="/posts">posts</a></li>
+				
+				
+				
+				<li><a class="no-decorations" href="/ethos">ethos</a></li>
+				
+				
+			</ul>
+		</nav>
+		
+<h1>Simplifying Interfaces with Function Types</h1>
+<p>In Go, you can define methods on type aliases, which means that we can define a type alias of a function, and then define methods on that function.</p>
+
+<h2 id="example">Example</h2>
+
+<p>Given the following interface</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="kd">type</span> <span class="nx">DB</span> <span class="kd">interface</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nf">Get</span><span class="p">(</span><span class="kt">string</span><span class="p">)</span> <span class="p">(</span><span class="kt">string</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre>
+<p>You can fulfill it using a function type like this:</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="kd">type</span> <span class="nx">GetFn</span> <span class="kd">func</span><span class="p">(</span><span class="kt">string</span><span class="p">)</span> <span class="p">(</span><span class="kt">string</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">f</span> <span class="nx">GetFn</span><span class="p">)</span> <span class="nf">Get</span><span class="p">(</span><span class="nx">a</span> <span class="kt">string</span><span class="p">)</span> <span class="p">(</span><span class="kt">string</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="nf">f</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre>
+<p>Now you can use GetFn whenever a DB is required:</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="kd">var</span> <span class="nx">storeFn</span> <span class="nx">DB</span> <span class="p">=</span> <span class="nf">GetFn</span><span class="p">(</span><span class="kd">func</span><span class="p">(</span><span class="nx">s</span> <span class="kt">string</span><span class="p">)</span> <span class="p">(</span><span class="kt">string</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="s">&#34;bar&#34;</span><span class="p">,</span> <span class="kc">nil</span>
+</span></span><span class="line"><span class="cl">	<span class="p">})</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">storeFn</span><span class="p">.</span><span class="nf">Get</span><span class="p">(</span><span class="s">&#34;Foo&#34;</span><span class="p">))</span> <span class="c1">// Outputs: bar
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span></code></pre>
+<p>You can try this example in this [Go Playground](<a href="https://go.dev/play/p/hyBNIMblafs">https://go.dev/play/p/hyBNIMblafs</a></p>
+
+<h2 id="how-it-works">How it works</h2>
+
+<p>In Go, interfaces are implicitly through method sets, which means any type (including a function type) that defines the required methods satisfies the interface. By defining the <code>Get</code> method on the <code>GetFn</code> type, the compiler treats <code>GetFn</code> as a valid implementation of the DB interface.</p>
+
+<p>This flexibility allows you to use function types as lightweight, dynamic implementations of interfaces, without the need for full struct definitions.</p>
+
+<h2 id="application">Application</h2>
+
+<p>One common use case for this pattern is testing. Instead of implementing a full mock, you can use an inline function to provide test specific behavior.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">TestHandler</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">mockDB</span> <span class="o">:=</span> <span class="nf">GetFn</span><span class="p">(</span><span class="kd">func</span><span class="p">(</span><span class="nx">key</span> <span class="kt">string</span><span class="p">)</span> <span class="p">(</span><span class="kt">string</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="nx">key</span> <span class="o">==</span> <span class="s">&#34;foo&#34;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="s">&#34;bar&#34;</span><span class="p">,</span> <span class="kc">nil</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="s">&#34;&#34;</span><span class="p">,</span> <span class="nx">fmt</span><span class="p">.</span><span class="nf">Errorf</span><span class="p">(</span><span class="s">&#34;not found&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">})</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nx">result</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">mockDB</span><span class="p">.</span><span class="nf">Get</span><span class="p">(</span><span class="s">&#34;foo&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">result</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span> <span class="c1">// Outputs: bar, &lt;nil&gt;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span></code></pre>
+<p>This approach is not limited to testing. It’s also useful for dependency injection, where you can pass in lightweight or context specific implementations of an interface.</p>
+
+<p>This pattern is similar to how <code>http.HandleFunc</code> works. In the HTTP package, <code>http.HandlerFunc</code> is a function type that fulfills the <code>http.Handler</code> interface by implementing its <code>ServeHTTP</code> method. This allows functions to act as handlers, providing great flexibility in designing web servers.</p>
+
+
+		<footer>
+			<br />
+			<hr />
+			​​​​​​​​​​​​​​​​​​​<br />​
+			<p>see something you disagree with? email: <a href="mailto:yourewrong@a73x.sh">yourewrong@a73x.sh</a></p>
+		</footer>
+	</main>
+</body>
+
+</html>
+
