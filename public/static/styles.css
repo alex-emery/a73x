@@ -1,6 +1,6 @@
 @font-face {
-    font-family: 'Mono';
-    src: url('/static/V1-ServerMono-Regular.woff2') format('woff2');
+    font-family: "EB Garamond";
+    src: url('/static/EBGaramond-VariableFont_wght.ttf');
     font-weight: normal;
     font-style: normal;
 }
@@ -25,9 +25,6 @@ hr {
    border-top: 1px dashed black;
 }
 
-code {
-    font-family: "Mono";
-}
 
 h1 {
     margin-bottom: 0;
@@ -45,7 +42,7 @@ h3 {
 }
 
 body {
-    font-family: "Mono";
+    font-family: "EB Garamond";
 }
 
 main {
