@@ -51,6 +51,17 @@ main {
     margin-right: auto;
 }
 
+.header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.header-title {
+
+}
+.nav {
+    align-self: center;
+}
 .nav ul {
     display: flex;
     list-style: none;
