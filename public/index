@@ -21,6 +21,8 @@
 				<h1>a73x</h1>
 				<sub>high effort, low reward</sub>
 			</div>
+					<p>[{home /} {posts /posts} {ethos /ethos}]</p>
+					<p>index.html</p>
 			<nav class="nav">
 				<ul>
 					
@@ -53,9 +55,7 @@
 
 <h1 id="tidbits">tidbits</h1>
 
-<p>Arbitrary bits of information</p>
-
-<h2 id="go">go</h2>
+<h2 id="go">#go</h2>
 
 <ul>
 <li>layout packages by what they do, not by their abstract type</li>
@@ -70,7 +70,7 @@
 more CPU == more contention</li>
 </ul>
 
-<h2 id="git">git</h2>
+<h2 id="git">#git</h2>
 
 <ul>
 <li><code>git reflog</code> will save you when you mess up</li>

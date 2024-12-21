@@ -21,6 +21,8 @@
 				<h1>a73x</h1>
 				<sub>high effort, low reward</sub>
 			</div>
+					<p>[{home /} {posts /posts} {ethos /ethos}]</p>
+					<p>posts/2024-12-08-02.html</p>
 			<nav class="nav">
 				<ul>
 					
@@ -44,24 +46,19 @@
 <h1>You and Your Career</h1>
 <blockquote>
 <p>The unexamined life is not worth living</p>
-<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl">- Socrates
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl">- Socrates (probably)
 </span></span></code></pre></blockquote>
 
-<p>Dr Richard Hamming was a prolific individual. You may recognise the name from &ldquo;Hamming codes&rdquo;, which he invented in 1950 during his time at Bell Labs—an invention which, amongst other achievements, resulted in being awarded a Turing Award. He was also awarded the Emanuel R. Piore Award in 1979 by the IEEE, and in 1986 the IEEE also created The Richard W. Hamming Medal in his honour.</p>
+<p>If you&rsquo;ve not listened to <a href="https://www.youtube.com/watch?v=a1zDuOPkMSw">You and Your Research</a> by Richard Hamming, I highly recommend it—you can also read the transcript <a href="https://www.cs.virginia.edu/~robins/YouAndYourResearch.html">here</a>. Hamming&rsquo;s talk emphasises the importance of examining your career and the choices you make. Whilst the talk specifically speaks about research, it&rsquo;s fairly easy to draw parallels to software engineering—you only have one life, so why not do significant work?</p>
 
-<p>On March 7 1986, Dr Richard Hamming delivered a talk centred around the question &ldquo;Why do so few scientists make significant contributions and so many are forgotten in the long run?&rdquo; He&rsquo;d spent his time observing great scientists at Los Alamos during the war and the 30 years he spent at Bell Labs and learnt a great deal from them.</p>
-
-<p>The talk was titled You and Your Research, and if you&rsquo;ve not listened to it you can do so <a href="https://www.youtube.com/watch?v=a1zDuOPkMSw">here</a> or you read the transcript <a href="https://www.cs.virginia.edu/~robins/YouAndYourResearch.html">here</a>.</p>
-
-<p>Hamming&rsquo;s talk emphasises the importance of examining your career and the choices you make. Whilst the talk specifically speaks about research, it is fairly easy to draw parallels to software engineering—you only have one life, so why not do significant work?</p>
-
-<p>Hamming doesn&rsquo;t define significant work, he leaves that to the listener to determine—it&rsquo;s deeply personal and varies for each individual. Instead, he outlines traits he&rsquo;s seen in others that have accomplished significant work.</p>
+<p>Hamming doesn&rsquo;t define significant work, nor will I—it&rsquo;s deeply personal and varies for each individual. Instead, he outlines traits he&rsquo;s seen in others that have accomplished significant work.</p>
 
 <ol>
 <li>Doing significant work often involves an element of luck, but as Hamming puts it, &lsquo;luck favours the prepared mind&rsquo;. Being in the right place at the right time will only matter if you have the knowledge or skills to execute. Creating opportunities is important but wasted if you aren&rsquo;t ready to perform. Conversely, having the ability to perform but no opportunities can feel just as futile. The key lies in striking a balance—cultivating both readiness and the conditions where luck can find you.</li>
 <li>Knowledge and productivity are like compound interest—consistent effort applied over time leads to exponential growth. In a field as vast as software, even a surface-level awareness of an idea can prove valuable when the time comes to use it, while deeper understanding builds expertise. Mastering the fundamentals is crucial; they are learned once and applied repeatedly in various contexts.</li>
-<li>Maintain enough self-belief to persist, but enough self-awareness to recognise and adapt to mistakes. I&rsquo;m honestly very fond of this idea, software is more akin to an art than a science—there are no perfect solutions, only trade-offs. Too often, I&rsquo;ve seen people double down on unquestioningly defending their ideas instead of listening. Success usually lies in minimising the disadvantages rather than chasing absolutes.</li>
-<li>To do important work, focus on important problems. As what is important is defined by you, what do you care about deeply? How can you work to address it? The importance of your career can only really be answered by you, and I think reflecting on what you&rsquo;re doing helps keep you on the right path.</li>
+<li>Maintain enough self-belief to persist, but enough self-awareness to recognise and adapt to mistakes. Software is more akin to an art than a science—there are no perfect solutions, only trade-offs. Success often lies in minimising the disadvantages rather than chasing absolutes.</li>
+<li>To do important work, focus on important problems. What do you care about deeply? How can you work to address it? The answer is personal, but I think there’s great importance is reflecting on it, even if the answer changes.<br>
+</li>
 </ol>
 
 <p>These aren&rsquo;t all the points Hamming raises, but they are some of the points that stuck with me; I highly recommend listening to the talk yourself so that you may draw your own conclusions.</p>

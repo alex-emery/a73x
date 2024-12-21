@@ -1,0 +1,6 @@
+{{template "base" .}}
+{{define "content"}}
+<a href="/posts">← Posts</a>
+<h1>{{.Meta.title}}</h1>
+{{ .Body }}
+{{end}}

@@ -27,17 +27,14 @@ hr {
 
 
 h1 {
-    margin-bottom: 0;
     font-size: 1.8rem;
 }
 
 h2 {
-    margin-bottom: 0;
     font-size: 1.5rem;
 }
 
 h3 {
-    margin-bottom: 0;
     font-size: 1.2rem;
 }
 
@@ -56,7 +53,8 @@ main {
     justify-content: space-between;
 }
 
-.header-title {
+.header-title h1{
+    margin-bottom: 0px;
 
 }
 .nav {
