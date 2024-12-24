@@ -43,45 +43,41 @@
 <h1>ethos</h1>
 <h3 id="this-site-has-an-ethos">This Site Has an Ethos</h3>
 
-<p>The internet wasn’t built to be what it is today: centralised, corporate, and relentlessly intrusive. Though it started as a decentralised network of connected devices, the modern internet is dominated by a handful of tech giants. They control the infrastructure, the platforms, and the data that define our digital lives. This centralised system has turned users into products—our information harvested, commodified, and sold in the name of profit.</p>
+<p>The internet wasn&rsquo;t built to be what it is today: centralised, corporate, and relentlessly intrusive. Though it started as a decentralised network of connected devices, the modern internet is dominated by a handful of tech giants. They control the infrastructure, the platforms, and the data that define our digital lives. This centralised system has turned users into products—our information is harvested, commodified, and sold in the name of profit.</p>
 
-<p>This site is my response to that dominance. It’s my small, self-sustained corner of the web, free from the control of big tech and corporate interests.</p>
+<p>This site is my response to that dominance. It&rsquo;s my small, self-sustained corner of the web, free from the control of big tech and corporate interests.</p>
 
-<h3 id="the-problem-with-today-s-internet">The Problem with Today’s Internet</h3>
+<h3 id="the-problem-with-today-s-internet">The Problem with Today&rsquo;s Internet</h3>
 
-<p>The internet is marketed as a place of freedom and connectivity, but increasingly, it’s neither. Users flock to major platforms—social media, search engines, cloud services—only to trade privacy and autonomy for convenience. Social networks offer the illusion of community, while search engines pretend to help us navigate the vast web. In reality, they funnel us toward paid content, using our data to feed surveillance-driven algorithms.</p>
+<p>The internet is marketed as a place of freedom and connectivity, but increasingly, it&rsquo;s neither. Users flock to major platforms—social media, search engines, cloud services—only to trade privacy for convenience. Social networks offer the illusion of community, while search engines pretend to help us navigate the vast web. In reality, these sites funnel us toward paid content, using our data to feed surveillance-driven algorithms.</p>
 
-<p>Data on these platforms isn’t a protected asset; it’s a resource for exploitation. Your personal information becomes a data point, sold and repackaged for targeted advertising, because big tech hasn’t found any other way to drive profit without compromising privacy.</p>
+<p>Data on these platforms isn&rsquo;t a protected asset; it&rsquo;s a resource for exploitation. Your personal information becomes a data point, sold and repackaged for targeted advertising because big tech hasn&rsquo;t found any other way to drive profit without compromising privacy.</p>
 
 <h3 id="a-different-approach-owning-your-infrastructure">A Different Approach: Owning Your Infrastructure</h3>
 
-<p>This site is hosted on a Lenovo M910Q—a modest, single-node Kubernetes cluster with an Intel i5-6500T processor and 8GB of RAM. I bought it in 2021 for £189.99. For comparison, running a similar setup on AWS with a <code>c6g.xlarge</code> instance (4 vCPUs, 8 GB memory) would cost around $1,600 for three years, not including storage or network fees. My setup, while humble, is cost-effective, stable, and entirely under my control.</p>
+<p>This site is hosted on a Lenovo M910Q—a single-node Kubernetes cluster with an Intel i5-6500T processor and 8GB of RAM. I bought it in 2021 for £189.99. For comparison, running a similar setup on AWS with a <code>c6g.xlarge</code> instance (4 vCPUs, 8 GB memory) would cost around $1,600 for three years, not including storage network, or electricity fees. So, I&rsquo;d argue that despite AWS advertising its low cost, cheap self-hosted computing for small projects is advantageous unless you need elasticity.</p>
 
-<p>For years, this single device has served me well, hosting various services like Tiny Tiny RSS, Miniflux, Ergochat, Vaultwarden, Immich, NextCloud, Matrix, cgit, and others. Currently, it only runs Miniflux, Ergochat, cgit, and this site. While some may argue that this isn’t a “production-ready” setup due to the lack of backups or failover nodes, I’m comfortable with it. If Miniflux is down, I’ll fix it. IRC is ephemeral, and this site is version-controlled on SourceHut.</p>
+<p>This single device has served me well for years, hosting various services like Tiny Tiny RSS, Miniflux, Ergochat, Vaultwarden, Immich, NextCloud, Matrix, cgit, and others. Currently, it only runs Miniflux, Ergochat, cgit, and this site. While some may argue that this isn&rsquo;t a &ldquo;production-ready&rdquo; setup due to the lack of backups or failover nodes, I&rsquo;m comfortable with it—I&rsquo;ve yet to have any accidental downtime. If Miniflux is down, I&rsquo;ll start it back up. IRC is ephemeral, and this site is version-controlled on SourceHut. I might not have enough regional replication to manage 99.999% uptime, but I have plans to reinstate these services.</p>
 
-<p>This hands-on approach means I’ve learned a lot more than if I were simply relying on a cloud provider. Managing Kubernetes, setting up firewalls, configuring DNS and DHCP—these tasks teach skills often abstracted away by cloud services. It’s work, but it’s also empowerment.</p>
+<p>Taking a hands-on approach means I&rsquo;ve learned a lot more than if I delegated to a cloud provider. Managing Kubernetes, setting up firewalls, configuring DNS and DHCP—these tasks teach skills often abstracted away by cloud services.</p>
 
 <h3 id="the-design-philosophy-minimalism-accessibility-and-longevity">The Design Philosophy: Minimalism, Accessibility, and Longevity</h3>
 
-<p>I’ve chosen a minimal design for this site. It uses almost no JavaScript, serves only static content, and is designed to work consistently across browsers and devices. The goal is simple: create a site that respects users’ time, attention, and data.</p>
+<p>I&rsquo;ve chosen a minimal design for this site. It uses almost no JavaScript, serves only static content, and is designed to work consistently across browsers and devices. The goal is simple: create a site that respects users&rsquo; time, attention, and data.</p>
 
-<p>This isn’t a space for tracking, data collection, or ads. Unlike the bloated, ad-filled experiences on many websites, this site prioritises speed and privacy. It’s designed to be here for the long term, a place that will continue to work as technology evolves.</p>
+<p>This isn&rsquo;t a space for tracking, data collection, or ads. Unlike the bloated, ad-filled experiences on many websites, this site prioritises speed and privacy. It&rsquo;s designed to be here for the long term, a place that will continue to work as technology evolves.</p>
 
 <h3 id="a-different-kind-of-content">A Different Kind of Content</h3>
 
-<p>In an age of algorithmic content feeds, low-effort Medium posts, and AI-generated text, I aim to provide something more thoughtful and human. I want this site to be a place to share the things I’ve learned, especially in tech, cloud development, and the nuances of working with Go.</p>
+<p>In an age of algorithmic content feeds, low-effort Medium posts, and AI-generated text, I aim to provide something more thoughtful and human. This site is a place to share what I&rsquo;ve learned, especially in tech, cloud development, and working with Go.</p>
 
-<p>Over time, I intend to curate this content—merging, filtering, and removing outdated posts to keep it relevant. This isn’t a place for clickbait or SEO tricks. It’s a place for well-considered insights, ideas, and practical knowledge.</p>
+<p>Over time, I intend to curate this content—merging, filtering, and removing outdated posts to keep it relevant.</p>
 
 <h3 id="why-it-matters">Why It Matters</h3>
 
-<p>The skills and knowledge I’ve gained from running this setup go beyond cost savings. By managing my own infrastructure, I’ve reclaimed a sense of ownership and independence that centralised platforms discourage. I’m not here to sell anything or grow an audience—I’m here to carve out a space on the web that’s truly mine.</p>
+<p>The skills and knowledge I&rsquo;ve gained from running this setup go beyond cost savings. By managing my own infrastructure, I&rsquo;ve reclaimed a sense of ownership and independence that centralised platforms discourage. I&rsquo;m not here to sell anything or grow an audience—I&rsquo;m here to carve out a space on the web that&rsquo;s truly mine.</p>
 
-<p>If you’re interested in building something like this for yourself, I’ll be sharing what I know. You don’t need a massive budget or a cloud subscription. You just need a willingness to learn, experiment, and take control of your digital presence.</p>
-
-<h3 id="my-ethos-in-practice">My Ethos in Practice</h3>
-
-<p>The modern web is bloated, intrusive, and corporate-controlled. This site represents a different vision: a lean, personal, and sustainable space, built with simplicity and independence in mind. As long as I keep learning and experimenting, I’ll continue to share what I discover. Perhaps it will inspire others to reclaim their own corner of the internet and create a web that reflects the values of its users, not just its corporations.</p>
+<p>If you&rsquo;re interested in building something like this for yourself, I&rsquo;ll be sharing what I know. You don&rsquo;t need a massive budget or a cloud subscription. You just need a willingness to learn, experiment, and take control of your digital presence.</p>
 
 
 		<footer>
