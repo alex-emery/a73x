@@ -25,60 +25,44 @@
 				<ul>
 					
 					
-					<li><a class="no-decorations" href="/">home</a></li>
+					<li><a class="no-decorations" href="/">Home</a></li>
 					
 					
 					
-					<li><a class="no-decorations" href="/posts">posts</a></li>
+					<li><a class="no-decorations" href="/posts">Posts</a></li>
 					
 					
 					
-					<li><a class="no-decorations" href="/ethos">ethos</a></li>
+					<li><a class="no-decorations" href="/ethos">Ethos</a></li>
 					
 					
 				</ul>
 			</nav>
 		</div>
+			<hr />
 		
 <a href="/posts">← Posts</a>
 <h1>Refactoring</h1>
-<nav>
-
+<h1 id="table-of-contents">Table of Contents</h1>
 <ul>
 <li>
-<ul>
-<li><a href="#why-we-refactor">Why we refactor</a></li>
-
-<li><a href="#when-to-refactor">When to refactor</a></li>
-
-<li><a href="#how-to-approach-refactoring">How to approach refactoring</a></li>
-</ul></li>
+<a href="#why-we-refactor">Why we refactor</a></li>
+<li>
+<a href="#when-to-refactor">When to refactor</a></li>
+<li>
+<a href="#how-to-approach-refactoring">How to approach refactoring</a></li>
 </ul>
-
-</nav>
-
 <h2 id="why-we-refactor">Why we refactor</h2>
-
 <p>Codebases are like ecosystems. Over time, they become messier and more convoluted. Each new developer brings their own understanding, habits, and constraints, and, in doing so, they shape the code in ways that might conflict with previous design intentions. Writing code, in reality, is much closer to writing a novel than building a bridge; it’s often less predictable and more open to interpretation.</p>
-
 <p>The cumulative effect of these contributions can transform even the most elegant codebase into something resembling an overgrown garden—wild, inconsistent, and difficult to navigate. Refactoring is a way of pruning back this overgrowth, restoring structure and clarity to the code. When we refactor, we make the code easier to reason about, easier to change, and, ultimately, easier to trust. And when the code is easier to work with, we reduce the friction of development, making it simpler to uncover potential bugs and faster to implement new features.</p>
-
 <h2 id="when-to-refactor">When to refactor</h2>
-
 <p>Knowing when to refactor isn’t a matter of following hard and fast rules; it’s more of an art, an intuitive understanding you build over time.</p>
-
 <p>In most cases, refactoring happens opportunistically, as part of the regular ebb and flow of development. For example, if you’re fixing a bug or adding a feature, you’ll often stumble across areas that need tidying up. And if a part of the code has languished, untouched and unloved, it might well require a dedicated pass to restore it to good health.</p>
-
 <p>A particularly opportune time to refactor is right before adding new functionality. Just as a gardener might clear space before planting, cleaning up the code first can clear a path for future changes. Refactoring at this stage allows you to improve the structure before adding more complexity, making it easier to understand, debug, and extend.</p>
-
 <p>On the other hand, refactoring in the middle of a change is generally a poor choice. In the midst of a new feature or bug fix, the code is likely already in a broken or incomplete state. Adding the additional variance of a refactor can muddy the waters. If something doesn’t work, is it due to the feature changes or the refactor? It’s usually best to finish the current task first and refactor afterward to keep everything manageable.</p>
-
 <h2 id="how-to-approach-refactoring">How to approach refactoring</h2>
-
 <p>The golden rule of refactoring is this: preserve behaviour. Refactoring is about changing the structure without changing the function. We’re improving the design of existing code, not altering what it does.</p>
-
 <p>To ensure this, a robust suite of tests is essential. If you don’t have tests covering the area you plan to refactor, it’s worth creating them first. Tests act as a safety net, giving you the confidence that after your refactoring, the code still behaves as expected. Without this safety net, refactoring can be risky—you may inadvertently introduce new bugs or alter functionality. But with good tests, you’re free to make improvements, knowing that any deviation from the intended behaviour will be caught.</p>
-
 <p>Refactoring done right is a powerful way to keep your codebase healthy. It reduces complexity, mitigates technical debt, and prepares your code for future change. It may not be glamorous, but it’s one of the most impactful ways to ensure that your codebase is something you—and others—can work with for the long haul.</p>
 
 

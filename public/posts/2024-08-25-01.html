@@ -25,39 +25,38 @@
 				<ul>
 					
 					
-					<li><a class="no-decorations" href="/">home</a></li>
+					<li><a class="no-decorations" href="/">Home</a></li>
 					
 					
 					
-					<li><a class="no-decorations" href="/posts">posts</a></li>
+					<li><a class="no-decorations" href="/posts">Posts</a></li>
 					
 					
 					
-					<li><a class="no-decorations" href="/ethos">ethos</a></li>
+					<li><a class="no-decorations" href="/ethos">Ethos</a></li>
 					
 					
 				</ul>
 			</nav>
 		</div>
+			<hr />
 		
 <a href="/posts">← Posts</a>
 <h1>Go Benchmarking</h1>
-<nav>
-
+<h1 id="table-of-contents">Table of Contents</h1>
 <ul>
-<li><a href="#cpuprofile">cpuprofile</a></li>
-
-<li><a href="#memprofile">memprofile</a></li>
-
-<li><a href="#pprof">pprof</a>
-<ul>
-<li><a href="#views">views</a></li>
-</ul></li>
+<li>
+<a href="#cpuprofile">cpuprofile</a></li>
+<li>
+<a href="#memprofile">memprofile</a></li>
+<li>
+<a href="#pprof">pprof</a><ul>
+<li>
+<a href="#views">views</a></li>
 </ul>
-
-</nav>
+</li>
+</ul>
 <p>The benchmark cycle:</p>
-
 <ol>
 <li>write a benchmark</li>
 <li>run a benchmark</li>
@@ -66,50 +65,43 @@
 <li>run your tests</li>
 <li>goto 2.</li>
 </ol>
-
-<h1 id="cpuprofile">cpuprofile</h1>
-<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl">go <span class="nb">test</span> -test<span class="o">=</span>XXX -bench &lt;regex&gt; -cpuprofile &lt;file&gt;
-</span></span></code></pre>
-<h1 id="memprofile">memprofile</h1>
-<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl">go <span class="nb">test</span> -test<span class="o">=</span>XXX -bench &lt;regex&gt; -memprofile &lt;file&gt; -benchmem
-</span></span></code></pre>
-<h1 id="pprof">pprof</h1>
-
+<h2 id="cpuprofile">cpuprofile</h2>
+<pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;white-space:pre-wrap;word-break:break-word;"><code>go <span style="color:#0aa">test</span> -test=XXX -bench &lt;regex&gt; -cpuprofile &lt;file&gt;
+</code></pre><h2 id="memprofile">memprofile</h2>
+<pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;white-space:pre-wrap;word-break:break-word;"><code>go <span style="color:#0aa">test</span> -test=XXX -bench &lt;regex&gt; -memprofile &lt;file&gt; -benchmem
+</code></pre><h2 id="pprof">pprof</h2>
 <p><a href="https://github.com/google/pprof/blob/main/doc/README.md">pprof usage</a></p>
-<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl">go pprof -http<span class="o">=</span>:8080 profile.pb.gz
-</span></span></code></pre>
-<p>will show a web UI for analysing the profile.</p>
-
-<h2 id="views">views</h2>
-
+<pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;white-space:pre-wrap;word-break:break-word;"><code>go pprof -http=:8080 profile.pb.gz
+</code></pre><p>will show a web UI for analysing the profile.</p>
+<h3 id="views">views</h3>
 <ul>
 <li>flame graph: <code>localhost:8080/ui/flamegraph</code>
-
 <ul>
-<li>shows percentage breakdown of how much resource each &ldquo;call&rdquo; made.</li>
-<li>clicking a box will make it &ldquo;100%&rdquo; allowing for deep diving</li>
-<li>right click &ldquo;show source code&rdquo; to view</li>
-</ul></li>
+<li>shows percentage breakdown of how much resource each &quot;call&quot; made.</li>
+<li>clicking a box will make it &quot;100%&quot; allowing for deep diving</li>
+<li>right click &quot;show source code&quot; to view</li>
+</ul>
+</li>
 <li>top: <code>localhost:8080/ui/top</code>
-
 <ul>
 <li>shows top functions
-
 <ul>
 <li><code>flat</code>: profile samples in this function</li>
 <li><code>cum</code>: (cumulative) profile samples in this function and its callees</li>
-</ul></li>
-</ul></li>
+</ul>
+</li>
+</ul>
+</li>
 <li>source: <code>localhost:8080/ui/source</code>
-
 <ul>
 <li>each source line is annotated with the time spent in that source line
-
 <ul>
 <li>the first number does not count time spent in functions called from the source line</li>
 <li>the second number does</li>
-</ul></li>
-</ul></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 
 

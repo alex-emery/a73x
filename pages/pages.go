@@ -128,9 +128,9 @@ func sortNavBar(nav []Navigation) {
 	// see no evil, speak no evil
 	sort.Slice(nav, func(i, j int) bool {
 		order := map[string]int{
-			"home":  1,
-			"posts": 2,
-			"about": 3,
+			"Home":  1,
+			"Posts": 2,
+			"Ethos": 3,
 		}
 
 		// Get the order value, default to a high number if not in the predefined order

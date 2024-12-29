@@ -25,79 +25,71 @@
 				<ul>
 					
 					
-					<li><a class="no-decorations" href="/">home</a></li>
+					<li><a class="no-decorations" href="/">Home</a></li>
 					
 					
 					
-					<li><a class="no-decorations" href="/posts">posts</a></li>
+					<li><a class="no-decorations" href="/posts">Posts</a></li>
 					
 					
 					
-					<li><a class="no-decorations" href="/ethos">ethos</a></li>
+					<li><a class="no-decorations" href="/ethos">Ethos</a></li>
 					
 					
 				</ul>
 			</nav>
 		</div>
+			<hr />
 		
 <a href="/posts">← Posts</a>
 <h1>Ghostty</h1>
-<p>Well, Ghostty is now finally released, so I&rsquo;ll briefly explain why I&rsquo;ve adopted it.</p>
-
-<p>For context, I&rsquo;ve been using Alacritty for the last few years, and I&rsquo;ve tried almost every terminal emulator under the sun—st, terminal, iTerm2, kitty, western, rxvt-unicode, Hyper, Warp, and a few others. One key requirement is cross-platform—I swap between MacOS and Linux a fair bit—and another is performance.</p>
-
-<p>I landed on Alacritty because it&rsquo;s blazing fast, cross-platform, and has just enough features to cover my needs.</p>
-
-<p>Kitty is another performant terminal, but I&rsquo;ve always been hesitant to adopt it due to Kovid Goyal&rsquo;s stewardship. I&rsquo;ve witnessed a few occasions where users have been hung out to dry, as their desired use case didn&rsquo;t fall within Kovid&rsquo;s view of the world. For instance, his intense dislike of multiplexers means anything multiplexer related is <a href="https://sw.kovidgoyal.net/kitty/faq/#i-am-using-tmux-and-have-a-problem">immediately shutdown</a>—he repeatedly says they&rsquo;re a hack—but has failed to implement all the features that would allow multiplexer users to leave their multiplexers behind—like some form of <a href="https://github.com/kovidgoyal/kitty/issues/391#issuecomment-846071535">session persistence</a>.</p>
-
-<p>I understand the project is large and constantly being bombarded with repeat questions can lead to curtness but I don&rsquo;t want to accidentally depend on a bug to find myself <a href="https://github.com/kovidgoyal/kitty/discussions/7735#discussioncomment-10370765">hung out to dry</a>.</p>
-
+<p>Well, Ghostty is now finally released, so I'll briefly explain why I've adopted it.</p>
+<p>For context, I've been using Alacritty for the last few years, and I've tried almost every terminal emulator under the sun—st, terminal, iTerm2, kitty, western, rxvt-unicode, Hyper, Warp, and a few others. One key requirement is cross-platform—I swap between MacOS and Linux a fair bit—and another is performance.</p>
+<p>I landed on Alacritty because it's blazing fast, cross-platform, and has just enough features to cover my needs.</p>
+<p>Kitty is another performant terminal, but I've always been hesitant to adopt it due to Kovid Goyal's stewardship. I've witnessed a few occasions where users have been hung out to dry, as their desired use case didn't fall within Kovid's view of the world. For instance, his intense dislike of multiplexers means anything multiplexer related is <a href="https://sw.kovidgoyal.net/kitty/faq/#i-am-using-tmux-and-have-a-problem">immediately shutdown</a>—he repeatedly says they're a hack—but has failed to implement all the features that would allow multiplexer users to leave their multiplexers behind—like some form of <a href="https://github.com/kovidgoyal/kitty/issues/391#issuecomment-846071535">session persistence</a>.</p>
+<p>I understand the project is large and constantly being bombarded with repeat questions can lead to curtness but I don't want to accidentally depend on a bug to find myself <a href="https://github.com/kovidgoyal/kitty/discussions/7735#discussioncomment-10370765">hung out to dry</a>.</p>
 <p>But onto Ghostty which, like Kitty, is feature rich. It has built-in ligatures, nerd fonts, and themes, provides tabs/panes and window management, and is highly performant. Not bad for a first release.</p>
-
-<p>I&rsquo;ve been trialling it since release (I didn&rsquo;t make it for the beta), and it&rsquo;s been seamless so far—my biggest praise is how it just works—I&rsquo;ve not experienced any issues—it looks good, and it&rsquo;s snappy.</p>
-
-<p>My configuration is fairly straightforward; I&rsquo;ve cleared all keybindings, so I manually set the ones I need. Two things I want to call out are <code>window-colorspace</code> and <code>toggle_quick_terminal</code>, both are macOS only settings.</p>
-
+<p>I've been trialling it since release (I didn't make it for the beta), and it's been seamless so far—my biggest praise is how it just works—I've not experienced any issues—it looks good, and it's snappy.</p>
+<p>My configuration is fairly straightforward; I've cleared all keybindings, so I manually set the ones I need. Two things I want to call out are <code>window-colorspace</code> and <code>toggle_quick_terminal</code>, both are macOS only settings.</p>
 <ul>
-<li><code>window-colorspace</code> changes colorspace from <code>srgb</code> to <code>display-p3</code>&hellip; I can&rsquo;t actually perceive a difference.</li>
+<li><code>window-colorspace</code> changes colorspace from <code>srgb</code> to <code>display-p3</code>... I can't actually perceive a difference.</li>
 <li><code>toggle_quick_terminal</code> gives you a little drop down terminal from the top which is nifty for quick actions</li>
 </ul>
-<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"># Fonts
-</span></span><span class="line"><span class="cl">font-family = &#34;Hack&#34;
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"># Mouse
-</span></span><span class="line"><span class="cl">mouse-hide-while-typing = true
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"># UI
-</span></span><span class="line"><span class="cl">theme = &#34;catppuccin-mocha&#34;
-</span></span><span class="line"><span class="cl">cursor-invert-fg-bg = true
-</span></span><span class="line"><span class="cl">background-opacity = 0.8
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">window-padding-x = 10
-</span></span><span class="line"><span class="cl">window-padding-y = 10
-</span></span><span class="line"><span class="cl">window-padding-balance = true
-</span></span><span class="line"><span class="cl">window-decoration = false
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">macos-titlebar-style = hidden
-</span></span><span class="line"><span class="cl">window-colorspace = display-p3
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"># Keybindings
-</span></span><span class="line"><span class="cl">keybind = super+n=new_window
-</span></span><span class="line"><span class="cl">keybind = super+w=close_window
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">keybind = super+c=copy_to_clipboard
-</span></span><span class="line"><span class="cl">keybind = super+v=paste_from_clipboard
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">keybind = super+shift+i=inspector:toggle
-</span></span><span class="line"><span class="cl">keybind = super+shift+r=reload_config
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">keybind = global:ctrl+space=toggle_quick_terminal
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"># Misc
-</span></span><span class="line"><span class="cl">confirm-close-surface = false
-</span></span><span class="line"><span class="cl">copy-on-select = clipboard
-</span></span></code></pre>
-<p>It&rsquo;s a strong contender for those who feel disillusioned by kitty but want more than Alacritty offers, and it requires minimal configuration out of the box—so I highly recommend giving it a try.</p>
+<pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;white-space:pre-wrap;word-break:break-word;"><code><span style="color:#aaa;font-style:italic"># Fonts</span>
+font-family = <span style="color:#a50">&#34;Hack&#34;</span>
+
+<span style="color:#aaa;font-style:italic"># Mouse</span>
+mouse-hide-while-typing = <span style="color:#00a">true</span>
+
+<span style="color:#aaa;font-style:italic"># UI</span>
+theme = <span style="color:#a50">&#34;catppuccin-mocha&#34;</span>
+cursor-invert-fg-bg = <span style="color:#00a">true</span>
+background-opacity = <span style="color:#099">0.8</span>
+
+window-padding-x = <span style="color:#099">10</span>
+window-padding-y = <span style="color:#099">10</span>
+window-padding-balance = <span style="color:#00a">true</span>
+window-decoration = <span style="color:#00a">false</span>
+
+macos-titlebar-style = hidden
+window-colorspace = display-p3
+
+<span style="color:#aaa;font-style:italic"># Keybindings</span>
+keybind = super<span style="color:#f00;background-color:#faa">+</span>n=new_window
+keybind = super<span style="color:#f00;background-color:#faa">+</span>w=close_window
+
+keybind = super<span style="color:#f00;background-color:#faa">+</span>c=copy_to_clipboard
+keybind = super<span style="color:#f00;background-color:#faa">+</span>v=paste_from_clipboard
+
+keybind = super<span style="color:#f00;background-color:#faa">+</span>shift<span style="color:#f00;background-color:#faa">+</span>i=inspector<span style="color:#f00;background-color:#faa">:</span>toggle
+keybind = super<span style="color:#f00;background-color:#faa">+</span>shift<span style="color:#f00;background-color:#faa">+</span>r=reload_config
+
+keybind = global<span style="color:#f00;background-color:#faa">:</span>ctrl<span style="color:#f00;background-color:#faa">+</span>space=toggle_quick_terminal
+
+<span style="color:#aaa;font-style:italic"># Misc</span>
+confirm-close-surface = <span style="color:#00a">false</span>
+copy-on-select = clipboard
+</code></pre><p>It's a strong contender for those who feel disillusioned by kitty but want more than Alacritty offers, and it requires minimal configuration out of the box—so I highly recommend giving it a try.</p>
 
 
 		<footer>

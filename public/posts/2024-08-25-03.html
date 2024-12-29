@@ -25,53 +25,45 @@
 				<ul>
 					
 					
-					<li><a class="no-decorations" href="/">home</a></li>
+					<li><a class="no-decorations" href="/">Home</a></li>
 					
 					
 					
-					<li><a class="no-decorations" href="/posts">posts</a></li>
+					<li><a class="no-decorations" href="/posts">Posts</a></li>
 					
 					
 					
-					<li><a class="no-decorations" href="/ethos">ethos</a></li>
+					<li><a class="no-decorations" href="/ethos">Ethos</a></li>
 					
 					
 				</ul>
 			</nav>
 		</div>
+			<hr />
 		
 <a href="/posts">← Posts</a>
 <h1>Levels of Optimisation</h1>
-<nav>
-
+<h1 id="table-of-contents">Table of Contents</h1>
 <ul>
-<li><a href="#benchmark-optimisation">Benchmark Optimisation</a></li>
-
-<li><a href="#profile-guided-optimisation">Profile guided optimisation</a></li>
-
-<li><a href="#runtime-optimisation">Runtime optimisation</a></li>
+<li>
+<a href="#benchmark-optimisation">Benchmark Optimisation</a></li>
+<li>
+<a href="#profile-guided-optimisation">Profile guided optimisation</a></li>
+<li>
+<a href="#runtime-optimisation">Runtime optimisation</a></li>
 </ul>
-
-</nav>
-<p>This probably isn&rsquo;t strictly true, but it makes sense to me.
-We&rsquo;ve got three levels of &ldquo;optimisation&rdquo; (assuming your actual design doesn&rsquo;t suck and needs optimising).</p>
-
-<h1 id="benchmark-optimisation">Benchmark Optimisation</h1>
-
-<p>To begin with, we have benchmark optimisation; you create a benchmark locally, dump a profile of it, and optimise it. Then, you run your tests because the most optimal solution is &ldquo;return nil&rdquo; and make sure you didn&rsquo;t break your tests.
-This is the first and easiest optimisation because it only requires a function, nothing else, and can be done in isolation. You don&rsquo;t need a working &ldquo;application&rdquo; here, just the function you&rsquo;re trying to benchmark. There are different types of benchmarks, micro, macro, etc., but I&rsquo;m leaving them out of scope for this conversation. Go read <a href="https://learning.oreilly.com/library/view/efficient-go/9781098105709/">Efficient Go</a>.</p>
-
-<h1 id="profile-guided-optimisation">Profile guided optimisation</h1>
-
-<p>This is a mild step up from benchmark optimisation only because you need a live server load from which you use to pull a profile, but it is probably the most hands-off step. You import the <code>net/http/pprof</code> package into your service, call the <code>debug/profile?seconds=30</code> to get a profile, and compile your binary with <code>go build -pgo=profile.pgo</code>. The compiler will make optimisations for you, and even if your profile is garbage, it shouldn&rsquo;t cause any regressions.</p>
-
-<p>You probably want to get a few profiles and merge them using <code>go tool pprof -proto a.out b.out &gt; merged</code>. This will help provide optimisations that are more relevant to your overall system; instead of just a single 30s slice.
+<p>This probably isn't strictly true, but it makes sense to me.<br />
+We've got three levels of &quot;optimisation&quot; (assuming your actual design doesn't suck and needs optimising).</p>
+<h2 id="benchmark-optimisation">Benchmark Optimisation</h2>
+<p>To begin with, we have benchmark optimisation; you create a benchmark locally, dump a profile of it, and optimise it. Then, you run your tests because the most optimal solution is &quot;return nil&quot; and make sure you didn't break your tests.<br />
+This is the first and easiest optimisation because it only requires a function, nothing else, and can be done in isolation. You don't need a working &quot;application&quot; here, just the function you're trying to benchmark. There are different types of benchmarks, micro, macro, etc., but I'm leaving them out of scope for this conversation. Go read <a href="https://learning.oreilly.com/library/view/efficient-go/9781098105709/">Efficient Go</a>.</p>
+<h2 id="profile-guided-optimisation">Profile guided optimisation</h2>
+<p>This is a mild step up from benchmark optimisation only because you need a live server load from which you use to pull a profile, but it is probably the most hands-off step. You import the <code>net/http/pprof</code> package into your service, call the <code>debug/profile?seconds=30</code> to get a profile, and compile your binary with <code>go build -pgo=profile.pgo</code>. The compiler will make optimisations for you, and even if your profile is garbage, it shouldn't cause any regressions.</p>
+<p>You probably want to get a few profiles and merge them using <code>go tool pprof -proto a.out b.out &gt; merged</code>. This will help provide optimisations that are more relevant to your overall system; instead of just a single 30s slice.<br />
 Also, if you have long-running calls that are chained together, a 30-second snapshot might not be enough, so try a sample with a longer window.</p>
-
-<h1 id="runtime-optimisation">Runtime optimisation</h1>
-
-<p>This is where you expose <code>/runtime/metrics</code> and monitor them continuously. There&rsquo;s a list of metrics that you might be interested in, a recommended set of metrics, and generally, you are looking to optimise your interactions with the go runtime. There are a few stats here: goroutine counts, goroutines waiting to run, heap size, how often garbage collection runs, how long garbage collection takes, etc. All useful information to use when optimising - when garbage collection is running, your program ain&rsquo;t. It&rsquo;s also useful for finding memory leaks; it becomes pretty obvious you are leaking goroutines when you graph the count and just watch it go up and never down.
-It&rsquo;s also just lowkey fun to look at the exposed data and understand what your system is doing.</p>
+<h2 id="runtime-optimisation">Runtime optimisation</h2>
+<p>This is where you expose <code>/runtime/metrics</code> and monitor them continuously. There's a list of metrics that you might be interested in, a recommended set of metrics, and generally, you are looking to optimise your interactions with the go runtime. There are a few stats here: goroutine counts, goroutines waiting to run, heap size, how often garbage collection runs, how long garbage collection takes, etc. All useful information to use when optimising - when garbage collection is running, your program ain't. It's also useful for finding memory leaks; it becomes pretty obvious you are leaking goroutines when you graph the count and just watch it go up and never down.<br />
+It's also just lowkey fun to look at the exposed data and understand what your system is doing.</p>
 
 
 		<footer>

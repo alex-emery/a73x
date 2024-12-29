@@ -25,128 +25,106 @@
 				<ul>
 					
 					
-					<li><a class="no-decorations" href="/">home</a></li>
+					<li><a class="no-decorations" href="/">Home</a></li>
 					
 					
 					
-					<li><a class="no-decorations" href="/posts">posts</a></li>
+					<li><a class="no-decorations" href="/posts">Posts</a></li>
 					
 					
 					
-					<li><a class="no-decorations" href="/ethos">ethos</a></li>
+					<li><a class="no-decorations" href="/ethos">Ethos</a></li>
 					
 					
 				</ul>
 			</nav>
 		</div>
+			<hr />
 		
 <a href="/posts">← Posts</a>
 <h1>Go Project Layouts</h1>
-<p>Do you lay awake at night and consider how to optimally layout your Go project?
-No&hellip;? what about recommending Windows to a friend or colleague??
-yeah me either&hellip;</p>
-
-<p>I&rsquo;ve seen a lot online that shows what I can only describe as endgame enterprise Go project layouts. These layouts are heavily folder-based and only make sense when your project has grown large enough to warrant the verbosity these folders provide. My only problem is that people often try to start there.</p>
-
+<p>Do you lay awake at night and consider how to optimally layout your Go project?<br />
+No...? what about recommending Windows to a friend or colleague??<br />
+yeah me either...</p>
+<p>I've seen a lot online that shows what I can only describe as endgame enterprise Go project layouts. These layouts are heavily folder-based and only make sense when your project has grown large enough to warrant the verbosity these folders provide. My only problem is that people often try to start there.</p>
 <p>A lot of design tells you to think about your project in layers.</p>
-
 <ul>
 <li>api</li>
 <li>domain</li>
 <li>storage</li>
 </ul>
-
-<p>If you read <a href="https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html">The Clean Architecture</a>
+<p>If you read <a href="https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html">The Clean Architecture</a><br />
 you get told the layers should be,</p>
-
 <ol>
 <li>entities</li>
 <li>use cases</li>
 <li>interface adapters</li>
 <li>frameworks and drivers.</li>
 </ol>
-
-<p>and that all dependencies should point in (yeah I know, I didn&rsquo;t do a circle so &ldquo;in&rdquo; doesn&rsquo;t make sense but I&rsquo;m sure you can follow).</p>
-
+<p>and that all dependencies should point in (yeah I know, I didn't do a circle so &quot;in&quot; doesn't make sense but I'm sure you can follow).</p>
 <p>This is an excellent idea; separation of concerns is good.</p>
-
 <p>So you make your folders.</p>
-<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl">.
-</span></span><span class="line"><span class="cl">├── drivers
-</span></span><span class="line"><span class="cl">├── entities
-</span></span><span class="line"><span class="cl">├── interfaces
-</span></span><span class="line"><span class="cl">└── usecases
-</span></span></code></pre>
-<p>aaand this is an awful idea. I don&rsquo;t even want to go further into this hypothetical layout because it hurts too much.</p>
-
-<p>Find me a project that actually creates these folders, and I&rsquo;ll find you the medium article titled &ldquo;Clean Code in Go&rdquo; which spawned it.</p>
-
-<p>The important parts of clean code, are the ideas presented, and how you apply them to a package orientated language. Creating a folder to represent each layer, doesn&rsquo;t really carry much weight here.</p>
-
-<p>As a package orientated language, we want to think and reason about things in terms of packages. Yes there will be a point where you may want to group your packages into some group, but that is mostly ceremonial.
-Go doesn&rsquo;t care if you&rsquo;re accessing <code>domain/bar</code> or <code>domain/foo/bar</code>. Either will simply be accessed as <code>bar</code>. This means that what matters what&rsquo;s in that package <code>bar</code>. Since everything will be read as <code>bar.Thing</code> i.e <code>import bytes</code> and <code>bytes.Buffer</code>.</p>
-
-<p>So, the package name sets context and expectations. If I grab the <code>json</code> package, I expect that package to do things around <code>json</code>. I&rsquo;d feel a bit confused if I was able to configure an smtp server.</p>
-
+<pre><code>.
+├── drivers
+├── entities
+├── interfaces
+└── usecases
+</code></pre>
+<p>aaand this is an awful idea. I don't even want to go further into this hypothetical layout because it hurts too much.</p>
+<p>Find me a project that actually creates these folders, and I'll find you the medium article titled &quot;Clean Code in Go&quot; which spawned it.</p>
+<p>The important parts of clean code, are the ideas presented, and how you apply them to a package orientated language. Creating a folder to represent each layer, doesn't really carry much weight here.</p>
+<p>As a package orientated language, we want to think and reason about things in terms of packages. Yes there will be a point where you may want to group your packages into some group, but that is mostly ceremonial.<br />
+Go doesn't care if you're accessing <code>domain/bar</code> or <code>domain/foo/bar</code>. Either will simply be accessed as <code>bar</code>. This means that what matters what's in that package <code>bar</code>. Since everything will be read as <code>bar.Thing</code> i.e <code>import bytes</code> and <code>bytes.Buffer</code>.</p>
+<p>So, the package name sets context and expectations. If I grab the <code>json</code> package, I expect that package to do things around <code>json</code>. I'd feel a bit confused if I was able to configure an smtp server.</p>
 <p>If you cannot come up with a package name that’s a meaningful prefix for the package’s contents, the package abstraction boundary may be wrong</p>
-
-<p>&ldquo;but you&rsquo;ve still not provided a good example?&rdquo;
-well
+<p>&quot;but you've still not provided a good example?&quot;<br />
+well<br />
 yes</p>
-
 <p>I think the project should grow organically to some degree. What we want to do is write code, and refactoring in Go is fairly cheap.</p>
-
 <p>Start with a <code>main.go</code> and make a <code>Run</code> function or some equivalent which it calls.</p>
-<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">Run</span><span class="p">()</span> <span class="kt">error</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="c1">// actual important stuff here
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nf">Run</span><span class="p">();</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="nx">log</span><span class="p">.</span><span class="nf">Fatal</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre>
-<p>This allows you to test your run function in a unit test, and keeps your <code>main</code> func minimal.</p>
-
+<pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;white-space:pre-wrap;word-break:break-word;"><code><span style="color:#00a">func</span> <span style="color:#0a0">Run</span>() <span style="color:#0aa">error</span> {
+	<span style="color:#aaa;font-style:italic">// actual important stuff here
+</span><span style="color:#aaa;font-style:italic"></span>}
+<span style="color:#00a">func</span> <span style="color:#0a0">main</span>() {
+	<span style="color:#00a">if</span> err := <span style="color:#0a0">Run</span>(); err != <span style="color:#00a">nil</span> {
+		log.<span style="color:#0a0">Fatal</span>(err)
+	}
+}
+</code></pre><p>This allows you to test your run function in a unit test, and keeps your <code>main</code> func minimal.</p>
 <p>As your project grows, you can keep it flat inside the root directory</p>
-<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl">├── api.go
-</span></span><span class="line"><span class="cl">├── go.mod
-</span></span><span class="line"><span class="cl">├── go.sum
-</span></span><span class="line"><span class="cl">├── main.go
-</span></span><span class="line"><span class="cl">├── rss.go
-</span></span><span class="line"><span class="cl">└── sqlite.go
-</span></span></code></pre>
-<p>Even just glancing at that, you can guess that this might be an RSS server, that uses sqlite to back it.</p>
-
+<pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;white-space:pre-wrap;word-break:break-word;"><code>├── api.go
+├── go.mod
+├── go.sum
+├── main.go
+├── rss.go
+└── sqlite.go
+</code></pre><p>Even just glancing at that, you can guess that this might be an RSS server, that uses sqlite to back it.</p>
 <p>Who knows what</p>
-<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl">├── drivers
-</span></span><span class="line"><span class="cl">├── entities
-</span></span><span class="line"><span class="cl">├── interfaces
-</span></span><span class="line"><span class="cl">└── usecases
-</span></span></code></pre>
-<p>does.</p>
-
-<p>As things evolve you might want to put them in <code>internal</code> to hide them from being imported by other packages, or <code>cmd</code> as you develop multiple binaries. Placing things in <code>internal</code> means you&rsquo;re free to mess around with it, without breaking any public contracts other users rely on.
-I can&rsquo;t be bothered rewriting my example, so here&rsquo;s a random one I found online; it&rsquo;s probably all right.
+<pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;white-space:pre-wrap;word-break:break-word;"><code>├── drivers
+├── entities
+├── interfaces
+└── usecases
+</code></pre><p>does.</p>
+<p>As things evolve you might want to put them in <code>internal</code> to hide them from being imported by other packages, or <code>cmd</code> as you develop multiple binaries. Placing things in <code>internal</code> means you're free to mess around with it, without breaking any public contracts other users rely on.<br />
+I can't be bothered rewriting my example, so here's a random one I found online; it's probably all right.<br />
 <a href="https://go.dev/doc/modules/layout#server-project">Server Project</a></p>
-<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl">project-root-directory/
-</span></span><span class="line"><span class="cl">  go.mod
-</span></span><span class="line"><span class="cl">  internal/
-</span></span><span class="line"><span class="cl">    auth/
-</span></span><span class="line"><span class="cl">      ...
-</span></span><span class="line"><span class="cl">    metrics/
-</span></span><span class="line"><span class="cl">      ...
-</span></span><span class="line"><span class="cl">    model/
-</span></span><span class="line"><span class="cl">      ...
-</span></span><span class="line"><span class="cl">  cmd/
-</span></span><span class="line"><span class="cl">    api-server/
-</span></span><span class="line"><span class="cl">      main.go
-</span></span><span class="line"><span class="cl">    metrics-analyzer/
-</span></span><span class="line"><span class="cl">      main.go
-</span></span><span class="line"><span class="cl">    ...
-</span></span><span class="line"><span class="cl">  ... the project<span class="err">&#39;</span>s other directories with non-Go code
-</span></span></code></pre>
-<p>My vague summary is that clean code gives you a north star to follow, an idea of how you want to separate and reason about the packages you create. You don&rsquo;t need to create the entities of abstraction that are also presented. Think about what things do or relate to and create packages for them. You should allow your project to grow organically but don&rsquo;t expect architecture to appear without following a north star.</p>
+<pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;white-space:pre-wrap;word-break:break-word;"><code>project-root-directory/
+  go.mod
+  internal/
+    auth/
+      ...
+    metrics/
+      ...
+    model/
+      ...
+  cmd/
+    api-server/
+      main.go
+    metrics-analyzer/
+      main.go
+    ...
+  ... the project<span style="color:#f00;background-color:#faa">&#39;</span>s other directories with non-Go code
+</code></pre><p>My vague summary is that clean code gives you a north star to follow, an idea of how you want to separate and reason about the packages you create. You don't need to create the entities of abstraction that are also presented. Think about what things do or relate to and create packages for them. You should allow your project to grow organically but don't expect architecture to appear without following a north star.</p>
 
 
 		<footer>

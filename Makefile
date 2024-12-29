@@ -10,10 +10,6 @@ build:
 serve: 
 	go run ./cmd/serve
 
-.PHONY: css
-css:
-	go run contrib/styles.go > public/static/syntax.css
-
 .PHONY: image
 image:
 	docker build . -t ${DOCKER_IMAGE}
