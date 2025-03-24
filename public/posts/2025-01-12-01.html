@@ -1,0 +1,119 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="description" content="Home for a73x" />
+	<meta name="author" content="a73x" />
+	<meta name="viewport"
+		content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width" />
+	<title>a73x</title>
+	<link rel="stylesheet" href="/static/styles.css">
+	<link rel="stylesheet" href="/static/syntax.css">
+	<link rel="icon" type="image/x-icon" href="/static/favicon.svg">
+</head>
+
+<body>
+	<main>
+		<div class="header">
+			<div class="header-title">
+				<h1>a73x</h1>
+				<sub>high effort, low reward</sub>
+			</div>
+			<nav class="nav">
+				<ul>
+					
+					
+					<li><a class="no-decorations" href="/">Home</a></li>
+					
+					
+					
+					<li><a class="no-decorations" href="/posts">Posts</a></li>
+					
+					
+					
+					<li><a class="no-decorations" href="/ethos">Ethos</a></li>
+					
+					
+				</ul>
+			</nav>
+		</div>
+			<hr />
+		
+<a href="/posts">← Posts</a>
+<h1>Kubernetes Networking</h1>
+<p>Every Pod in a Kubernetes cluster is given a cluster IP address. This cluster IP<br />
+address is unique within the entire cluster, and allows pod within the same<br />
+cluster to communicate with each other. However we rarely deploy just a pod, as a<br />
+pod is considered ephemeral, and is the most basic units of compute. We often use<br />
+a deployment instead, providing us with horizontal scaling and a promise<br />
+that a minimum number of pods will be maintained. When a pod goes down, it could<br />
+be recreated on any node, with a completely different IP address.</p>
+<p>Kubernetes Services abstracts us away from the IP addresses of the pod, and<br />
+provides a stable IP address we can utilise instead. Services come in several types:</p>
+<ul>
+<li>ClusterIP(default): Provides an IP only usable within the cluster.</li>
+<li>NodePort: Exposes the service on a port on every node.</li>
+<li>LoadBalancer: Relies on external cloud provider to provision a load balancer.</li>
+<li>ExternalName: Maps to an external DNS name without proxying.</li>
+</ul>
+<p>A Service uses Kubernetes selectors to determine which Pods are valid backends<br />
+for the created service. A Service is backed by an EndpointSlice, a list of<br />
+valid IP address that the service's virtual IP address should route to. This<br />
+routing of traffic is, by default, handled by <code>kube-proxy</code>.</p>
+<p><code>kube-proxy</code> is a component that runs on each node that is part of the cluster. It can operate using two different backends</p>
+<ul>
+<li>iptables(default)</li>
+<li>ipvs</li>
+</ul>
+<p>It watches Services and EndpointSlices to determine how to configure the<br />
+backend to redirect traffic from the Service's virtual IP to one of the IP<br />
+addresses in the EndpointSlice.</p>
+<p>The Pods networking is established by a CNI plugin (Container Network Interface<br />
+plugin). The plugin is responsible for</p>
+<ul>
+<li>creating the network interfaces  within the Pod.</li>
+<li>Assigning IP addresses from the Pod CIDR range.</li>
+<li>Managing Pod-To-Pod communication across nodes.<br />
+While pods have their own network namespace, they share the node's kernel. Pods have an entire copy the Linux networking stack, which is why we<br />
+can run so many Pods on localhost:80 without any collision.</li>
+</ul>
+<p>A CNI plugin like Flannel, uses a vxlan backend by default.<br />
+vxlan wraps a MAC frame in a UDP datagram for transport across an IP network,<br />
+creating an overlay network that spans all nodes.</p>
+<p>To prevent collisions, the Service CIDR and the Pod CIDR are separate.</p>
+<h2 id="example">Example</h2>
+<p>To demonstrate some of this, here is output from a kind cluster of 3 nodes.</p>
+<pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;white-space:pre-wrap;word-break:break-word;"><code>❯ k get nodes -o=custom-columns=<span style="color:#a50">&#39;NAME:.metadata.name,CIDR:.spec.podCIDR,ExternalIP:.status.addresses[0].address&#39;</span>
+NAME                 CIDR            ExternalIP
+kind-control-plane   10.244.0.0/24   172.18.0.3
+kind-worker          10.244.1.0/24   172.18.0.2
+kind-worker2         10.244.2.0/24   172.18.0.4
+</code></pre><p>On a node, running <code>ip route</code> shows how traffic for Pods on other nodes is routed.</p>
+<pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;white-space:pre-wrap;word-break:break-word;"><code>&gt; docker <span style="color:#0aa">exec</span> -it kind-worker ip route
+default via 172.18.0.1 dev eth0
+10.244.0.0/24 via 172.18.0.3 dev eth0
+10.244.1.2 dev vethf0b11f5a scope host
+10.244.2.0/24 via 172.18.0.4 dev eth0
+172.18.0.0/16 dev eth0 proto kernel scope link src 172.18.0.2
+</code></pre><p>Inside a Pod, <code>ip route</code> returns:</p>
+<pre><code>root@my-shell:/# ip route
+default via 10.244.1.1 dev eth0
+10.244.1.0/24 via 10.244.1.1 dev eth0 src 10.244.1.2
+10.244.1.1 dev eth0 scope link src 10.244.1.2
+</code></pre>
+<p>Showing how Pod traffic is routed: traffic for Pods on the same node go directly through the Pod's eth0 interface, while traffic for Pods on the other nodes get sent to the node first, which then forwards it appropriately. Since these CIDRs overlap, the more specific route (longest prefix) takes precedence.</p>
+
+
+		<footer>
+			<br />
+			<hr />
+			​​​​​​​​​​​​​​​​​​​<br />​
+			<p>see something you disagree with? email: <a href="mailto:yourewrong@a73x.sh">yourewrong@a73x.sh</a></p>
+		</footer>
+	</main>
+</body>
+
+</html>
+
